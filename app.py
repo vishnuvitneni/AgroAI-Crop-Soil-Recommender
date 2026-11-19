@@ -21,10 +21,12 @@ try:
     from src.recommend import CropAdvisoryEngine, CROP_DETAILS, AGRONOMIC_PROFILES
     from src.weather_service import get_weather_by_city, get_weather_by_coords
     from src.database import save_prediction, get_history, get_prediction_by_id, clear_history
+    from src.agri_stores import get_nearby_shops, get_price_drop_sheet, COMMODITY_PRICE_SHEET
 except ImportError:
     from recommend import CropAdvisoryEngine, CROP_DETAILS, AGRONOMIC_PROFILES
     from weather_service import get_weather_by_city, get_weather_by_coords
     from database import save_prediction, get_history, get_prediction_by_id, clear_history
+    from agri_stores import get_nearby_shops, get_price_drop_sheet, COMMODITY_PRICE_SHEET
 
 app = Flask(__name__)
 engine = CropAdvisoryEngine()
@@ -244,6 +246,44 @@ def api_export_history():
         output.getvalue(),
         mimetype="text/csv",
         headers={"Content-Disposition": "attachment; filename=agroai_soil_test_history.csv"}
+    )
+
+@app.route("/api/shops", methods=["GET"])
+def api_nearby_shops():
+    location = request.args.get("location", "Hyderabad, Telangana, India").strip()
+    lat = request.args.get("lat")
+    lon = request.args.get("lon")
+    res = get_nearby_shops(location_name=location, lat=lat, lon=lon)
+    return jsonify({"status": "success", "data": res})
+
+@app.route("/api/prices", methods=["GET"])
+def api_prices():
+    category = request.args.get("category", "all")
+    items = get_price_drop_sheet(category)
+    return jsonify({"status": "success", "total": len(items), "items": items})
+
+@app.route("/api/prices/export", methods=["GET"])
+def api_export_prices():
+    items = get_price_drop_sheet()
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow([
+        "Item ID", "Commodity Name", "Category", "Brand / Manufacturer",
+        "MRP (INR)", "Current Price (INR)", "Price Drop (%)", "Discount Amount (INR)",
+        "Subsidy Tag", "Stock Status", "Availability Notes"
+    ])
+    for item in items:
+        writer.writerow([
+            item.get("id"), item.get("name"), item.get("category"), item.get("brand"),
+            item.get("mrp_inr"), item.get("current_price_inr"), item.get("price_drop_pct"),
+            item.get("drop_amount_inr"), item.get("subsidy_tag"), item.get("stock_status"),
+            item.get("notes")
+        ])
+    output.seek(0)
+    return Response(
+        output.getvalue(),
+        mimetype="text/csv",
+        headers={"Content-Disposition": "attachment; filename=agroai_price_drop_sheet.csv"}
     )
 
 @app.route("/report/<int:prediction_id>")

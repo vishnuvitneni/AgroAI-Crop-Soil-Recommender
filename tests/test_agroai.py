@@ -187,5 +187,28 @@ def test_flask_endpoints(client):
     assert "text/csv" in res_csv.content_type
     assert "Nitrogen (N)" in res_csv.get_data(as_text=True)
 
+    # 10. Nearby Shops API
+    res_shops = client.get("/api/shops?location=Hyderabad")
+    assert res_shops.status_code == 200
+    shops_data = res_shops.get_json()
+    assert shops_data["status"] == "success"
+    assert len(shops_data["data"]["shops"]) >= 3
+    assert "phone" in shops_data["data"]["shops"][0]
+    assert "maps_url" in shops_data["data"]["shops"][0]
+
+    # 11. Price Drop Sheet API
+    res_prices = client.get("/api/prices")
+    assert res_prices.status_code == 200
+    prices_data = res_prices.get_json()
+    assert prices_data["status"] == "success"
+    assert prices_data["total"] >= 10
+    assert any(item["price_drop_pct"] > 0 for item in prices_data["items"])
+
+    # 12. Price Drop Export CSV
+    res_price_csv = client.get("/api/prices/export")
+    assert res_price_csv.status_code == 200
+    assert "text/csv" in res_price_csv.content_type
+    assert "Neem Coated Urea" in res_price_csv.get_data(as_text=True)
+
 if __name__ == "__main__":
     pytest.main(["-v", __file__])
