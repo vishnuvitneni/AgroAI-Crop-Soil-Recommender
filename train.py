@@ -8,9 +8,22 @@ import json
 import math
 import random
 
+# Determine base repository directory dynamically
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+if os.path.basename(CURRENT_DIR) == "src":
+    BASE_DIR = os.path.abspath(os.path.join(CURRENT_DIR, ".."))
+else:
+    BASE_DIR = CURRENT_DIR
+
+DATA_PATH = os.path.join(BASE_DIR, "data", "Crop_recommendation.csv")
+MODEL_DIR = os.path.join(BASE_DIR, "models")
+MODEL_PATH = os.path.join(MODEL_DIR, "trained_model.json")
+
 FEATURES = ['N', 'P', 'K', 'temperature', 'humidity', 'ph', 'rainfall']
 
-def load_data(filepath="data/Crop_recommendation.csv"):
+def load_data(filepath=None):
+    if filepath is None:
+        filepath = DATA_PATH
     rows = []
     with open(filepath, "r", encoding="utf-8") as f:
         reader = csv.reader(f)
@@ -161,8 +174,8 @@ def evaluate_model(model, test_data):
     return acc, class_metrics
 
 def main():
-    os.makedirs("models", exist_ok=True)
-    os.makedirs("data", exist_ok=True)
+    os.makedirs(MODEL_DIR, exist_ok=True)
+    os.makedirs(os.path.dirname(DATA_PATH), exist_ok=True)
     
     print("[1/4] Loading and parsing Crop Recommendation dataset...")
     rows = load_data()
@@ -242,11 +255,10 @@ def main():
         "class_metrics": gnb_metrics
     }
     
-    save_path = os.path.join("models", "trained_model.json")
-    with open(save_path, "w", encoding="utf-8") as f:
+    with open(MODEL_PATH, "w", encoding="utf-8") as f:
         json.dump(trained_payload, f, indent=2)
         
-    print(f"\n[4/4] Model artifact successfully serialized to {save_path}")
+    print(f"\n[4/4] Model artifact successfully serialized to {MODEL_PATH}")
     print("Training finished successfully!")
 
 if __name__ == "__main__":

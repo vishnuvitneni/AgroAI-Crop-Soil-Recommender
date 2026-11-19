@@ -229,15 +229,32 @@ CROP_DETAILS = {
     }
 }
 
+# Resolve base project directory dynamically
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+if os.path.basename(CURRENT_DIR) == "src":
+    BASE_DIR = os.path.abspath(os.path.join(CURRENT_DIR, ".."))
+else:
+    BASE_DIR = CURRENT_DIR
+
+DEFAULT_MODEL_PATH = os.path.join(BASE_DIR, "models", "trained_model.json")
+
 class CropAdvisoryEngine:
-    def __init__(self, model_file="models/trained_model.json"):
-        self.model_file = model_file
+    def __init__(self, model_file=None):
+        self.model_file = model_file or DEFAULT_MODEL_PATH
         self.meta = None
         self.load()
         
     def load(self):
         if not os.path.exists(self.model_file):
-            raise FileNotFoundError(f"Model file {self.model_file} not found. Run train.py first.")
+            try:
+                try:
+                    from src.train import main as train_model
+                except ImportError:
+                    from train import main as train_model
+                train_model()
+            except Exception as e:
+                raise FileNotFoundError(f"Model file {self.model_file} not found and auto-training failed: {e}")
+
         with open(self.model_file, "r", encoding="utf-8") as f:
             self.meta = json.load(f)
             

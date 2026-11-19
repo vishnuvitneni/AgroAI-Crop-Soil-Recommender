@@ -5,6 +5,7 @@ Uses Open-Meteo free public API (No API key required)
 import json
 import urllib.request
 import urllib.error
+import urllib.parse
 
 # WMO Weather interpretation codes
 WMO_CODES = {
