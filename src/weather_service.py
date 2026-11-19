@@ -86,13 +86,30 @@ def get_weather_by_coords(lat, lon, place_name=None):
     except Exception as e:
         return {"success": False, "error": f"Failed to fetch weather: {str(e)}"}
 
+CITY_ALIASES = {
+    "bangluru": "Bengaluru",
+    "banglore": "Bengaluru",
+    "bengalooru": "Bengaluru",
+    "bengaluru": "Bengaluru",
+    "hydrabad": "Hyderabad",
+    "bombay": "Mumbai",
+    "madras": "Chennai",
+    "calcutta": "Kolkata",
+    "delhy": "Delhi",
+    "ahmedbad": "Ahmedabad",
+    "vizag": "Visakhapatnam",
+}
+
 def get_weather_by_city(city_name):
     """Geocode city name and fetch current weather"""
     if not city_name or not city_name.strip():
         return {"success": False, "error": "City name cannot be empty."}
         
     try:
-        clean_city = urllib.parse.quote(city_name.strip())
+        norm_city = city_name.strip().lower()
+        search_query = CITY_ALIASES.get(norm_city, city_name.strip())
+        
+        clean_city = urllib.parse.quote(search_query)
         geo_url = f"https://geocoding-api.open-meteo.com/v1/search?name={clean_city}&count=1&language=en&format=json"
         geo_data = _make_request(geo_url)
         

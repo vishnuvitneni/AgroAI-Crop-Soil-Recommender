@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgroAI - Intelligent Crop & Soil Health Advisor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #111827;
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary: #10b981;
+      --primary-hover: #059669;
+      --primary-glow: rgba(16, 185, 129, 0.25);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --accent: #3b82f6;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 24px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1340px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--card-border);
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .logo-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #10b981, #047857);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 4px 16px var(--primary-glow);
+    }
+
+    .logo-text h1 {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(to right, #34d399, #6ee7b7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo-text p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .header-badges {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #d1d5db;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chip-green {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: rgba(16, 185, 129, 0.3);
+      color: #34d399;
+    }
+
+    /* Location & Weather Bar */
+    .weather-panel {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.8));
+      border: 1px solid rgba(59, 130, 246, 0.25);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .weather-search-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .city-input {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 9px 14px;
+      color: white;
+      font-size: 14px;
+      flex: 1;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .city-input:focus {
+      border-color: var(--accent);
+    }
+
+    .weather-btn {
+      background: #3b82f6;
+      color: white;
+      border: none;
+      padding: 9px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .weather-btn:hover {
+      background: #2563eb;
+    }
+
+    .gps-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      color: #e5e7eb;
+      padding: 9px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .gps-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .weather-display-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .weather-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      padding: 6px 14px;
+      border-radius: 12px;
+    }
+
+    .weather-icon-large {
+      font-size: 26px;
+    }
+
+    .weather-metric-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .weather-loc-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .weather-condition-desc {
+      font-size: 11px;
+      color: #93c5fd;
+    }
+
+    .weather-metrics-pills {
+      display: flex;
+      gap: 8px;
+    }
+
+    .w-pill {
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.07);
+      padding: 4px 8px;
+      border-radius: 6px;
+      color: #f3f4f6;
+    }
+
+    .apply-weather-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      border: none;
+      padding: 9px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px var(--primary-glow);
+      transition: transform 0.1s;
+    }
+
+    .apply-weather-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    /* Crop Explorer Bar */
+    .crop-search-panel {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(15, 23, 42, 0.8));
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+
+    .crop-search-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .crop-search-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #34d399;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .crop-dropdown-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      max-width: 450px;
+    }
+
+    .crop-select {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 8px 12px;
+      color: white;
+      font-size: 13px;
+      width: 100%;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .crop-select option {
+      background: #111827;
+      color: white;
+    }
+
+    .crop-detail-card {
+      display: none;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+
+    .crop-detail-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .crop-detail-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .crop-detail-icon {
+      font-size: 32px;
+    }
+
+    .compat-gauge {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      padding: 6px 14px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .compat-score {
+      font-size: 18px;
+      font-weight: 800;
+      color: #34d399;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .crop-params-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .param-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #d1d5db;
+    }
+
+    .load-crop-btn {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid #10b981;
+      color: #34d399;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .load-crop-btn:hover {
+      background: #10b981;
+      color: #064e3b;
+    }
+
+    /* Preset Toolbar */
+    .presets-bar {
+      margin-bottom: 24px;
+    }
+
+    .presets-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .presets-list {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+    }
+
+    .preset-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      color: #e5e7eb;
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .preset-btn:hover {
+      background: rgba(16, 185, 129, 0.12);
+      border-color: var(--primary);
+      color: #34d399;
+      transform: translateY(-1px);
+    }
+
+    /* Main Grid */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 28px;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Card */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Parameter Controls */
+    .input-group {
+      margin-bottom: 18px;
+    }
+
+    .input-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .input-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .input-val-box {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      color: #34d399;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 4px 10px;
+      width: 80px;
+      text-align: right;
+    }
+
+    .slider-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    input[type=range] {
+      flex: 1;
+      height: 6px;
+      -webkit-appearance: none;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      outline: none;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--primary);
+      cursor: pointer;
+      box-shadow: 0 0 10px var(--primary);
+      transition: transform 0.1s;
+    }
+
+    input[type=range]::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    .range-limits {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+
+    .predict-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px var(--primary-glow);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .predict-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
+    }
+
+    /* Result Panel */
+    .hero-recommendation {
+      background: linear-gradient(145deg, rgba(16, 185, 129, 0.08), rgba(6, 78, 59, 0.25));
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .crop-avatar {
+      font-size: 56px;
+      width: 88px;
+      height: 88px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .hero-info {
+      flex: 1;
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+    }
+
+    .hero-crop-name {
+      font-size: 26px;
+      font-weight: 800;
+      color: #ffffff;
+      text-transform: capitalize;
+    }
+
+    .confidence-badge {
+      background: #10b981;
+      color: #064e3b;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .hero-category {
+      font-size: 13px;
+      color: #34d399;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .hero-desc {
+      font-size: 13.5px;
+      color: #d1d5db;
+    }
+
+    /* Soil Health Section */
+    .soil-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 600px) {
+      .soil-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .soil-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .soil-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .soil-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #9ca3af;
+    }
+
+    .soil-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+
+    .soil-tip {
+      font-size: 12px;
+      color: #d1d5db;
+      line-height: 1.4;
+    }
+
+    /* Farm Care Tips */
+    .care-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 600px) {
+      .care-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .care-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .care-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .care-desc {
+      font-size: 13px;
+      color: #e5e7eb;
+      line-height: 1.4;
+    }
+
+    /* Runner ups */
+    .runners-list {
+      margin-top: 14px;
+      margin-bottom: 20px;
+    }
+
+    .runner-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .runner-name {
+      width: 130px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: capitalize;
+      color: #e5e7eb;
+    }
+
+    .runner-bar-wrap {
+      flex: 1;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .runner-bar {
+      height: 100%;
+      background: linear-gradient(to right, #10b981, #34d399);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    .runner-pct {
+      width: 50px;
+      text-align: right;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      color: #9ca3af;
+    }
+
+    .report-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #93c5fd;
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .report-link-btn:hover {
+      background: rgba(59, 130, 246, 0.25);
+      color: white;
+    }
+
+    /* History Table */
+    .history-card {
+      margin-top: 28px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 13px;
+    }
+
+    .history-table th, .history-table td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .history-table th {
+      color: #9ca3af;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .history-table td {
+      color: #e5e7eb;
+    }
+
+    .clear-btn {
+      background: transparent;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #f87171;
+      padding: 5px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .clear-btn:hover {
+      background: rgba(239, 68, 68, 0.15);
+    }
+
+    /* Custom Modal Popup ("Error of place") */
+    .custom-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .custom-modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .custom-modal-box {
+      background: #111827;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 14px;
+      width: 90%;
+      max-width: 440px;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 25px rgba(239, 68, 68, 0.15);
+      transform: translateY(-12px) scale(0.97);
+      transition: transform 0.2s ease;
+      overflow: hidden;
+    }
+
+    .custom-modal-overlay.active .custom-modal-box {
+      transform: translateY(0) scale(1);
+    }
+
+    .custom-modal-header {
+      background: rgba(239, 68, 68, 0.1);
+      border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .custom-modal-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #f87171;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .custom-modal-close-x {
+      background: transparent;
+      border: none;
+      color: #9ca3af;
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .custom-modal-close-x:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .custom-modal-body {
+      padding: 20px 20px;
+      font-size: 14.5px;
+      color: #e5e7eb;
+      line-height: 1.5;
+    }
+
+    .custom-modal-footer {
+      padding: 12px 18px 16px;
+      display: flex;
+      justify-content: flex-end;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .custom-modal-ok-btn {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      border: none;
+      padding: 8px 24px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+      transition: all 0.15s ease;
+    }
+
+    .custom-modal-ok-btn:hover {
+      background: #b91c1c;
+      transform: translateY(-1px);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 36px;
+      padding-top: 20px;
+      border-top: 1px solid var(--card-border);
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="logo-badge">
+        <div class="logo-icon">🌾</div>
+        <div class="logo-text">
+          <h1>AgroAI Crop & Soil Recommender</h1>
+          <p>Machine Learning + Live Weather + Crop Compatibility Explorer</p>
+        </div>
+      </div>
+      <div class="header-badges">
+        <div class="chip chip-green">
+          <span>●</span>
+          <span>Gaussian Naive Bayes: 99.32% Accuracy</span>
+        </div>
+        <div class="chip">
+          <span>K-NN (k=5): 97.95%</span>
+        </div>
+        <div class="chip">
+          <span>22 Supported Crops</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Location & Live Weather Bar -->
+    <div class="weather-panel">
+      <div class="weather-search-wrap">
+        <input type="text" id="city_search_input" class="city-input" placeholder="Search City Weather (e.g. Hyderabad, Mumbai, London, Nairobi...)" onkeypress="if(event.key==='Enter') fetchWeatherByCity();">
+        <button class="weather-btn" onclick="fetchWeatherByCity()">🔍 Search</button>
+        <button class="gps-btn" onclick="detectUserLocation()" title="Use GPS Location">📍 GPS</button>
+      </div>
+
+      <div class="weather-display-wrap">
+        <div class="weather-badge">
+          <div class="weather-icon-large" id="w_icon">☀️</div>
+          <div class="weather-metric-group">
+            <div class="weather-loc-title" id="w_loc_name">Bengaluru, India</div>
+            <div class="weather-condition-desc" id="w_condition">Clear Sky</div>
+          </div>
+          <div class="weather-metrics-pills">
+            <div class="w-pill" id="w_temp">🌡️ 26°C</div>
+            <div class="w-pill" id="w_hum">💧 45%</div>
+            <div class="w-pill" id="w_rain">🌧️ 65 mm</div>
+          </div>
+        </div>
+
+        <button class="apply-weather-btn" onclick="applyLiveWeather()">
+          <span>⚡ Auto-Fill Weather</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Crop Search & Compatibility Bar -->
+    <div class="crop-search-panel">
+      <div class="crop-search-header">
+        <div class="crop-search-title">
+          <span>🔍 Search & Explore Any Specific Crop (22 Supported):</span>
+        </div>
+        <div class="crop-dropdown-wrap">
+          <select id="crop_explorer_select" class="crop-select" onchange="onCropSelectChange(this.value)">
+            <option value="">-- Choose or search a crop to check suitability --</option>
+            {% for c in crop_catalog %}
+              <option value="{{ c.id }}">{{ c.icon }} {{ c.title }} ({{ c.category }})</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <!-- Crop Detail & Compatibility Box -->
+      <div id="crop_detail_card" class="crop-detail-card">
+        <div class="crop-detail-top">
+          <div class="crop-detail-info">
+            <div id="exp_icon" class="crop-detail-icon">🌱</div>
+            <div>
+              <div id="exp_title" style="font-size: 18px; font-weight: 700; color: white;">Crop Name</div>
+              <div id="exp_cat" style="font-size: 12px; color: #34d399;">Category</div>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <div class="compat-gauge">
+              <span style="font-size: 12px; color: #9ca3af;">Suitability for Your Current Field:</span>
+              <span id="exp_compat_score" class="compat-score">--%</span>
+            </div>
+            <button class="load-crop-btn" onclick="loadIdealCropParams()">
+              ⚡ Set Sliders to Ideal Conditions
+            </button>
+          </div>
+        </div>
+
+        <div style="font-size: 13px; color: #d1d5db; margin-bottom: 10px;" id="exp_desc"></div>
+
+        <div class="crop-params-row" id="exp_params_row">
+          <!-- Populated by JS -->
+        </div>
+
+        <div id="exp_gaps_box" style="font-size: 12px; color: #f59e0b; margin-top: 6px;"></div>
+      </div>
+    </div>
+
+    <!-- Presets Toolbar -->
+    <div class="presets-bar">
+      <div class="presets-label">⚡ Quick Agricultural Field Presets:</div>
+      <div class="presets-list">
+        {% for key, preset in presets.items() %}
+          <button class="preset-btn" onclick="applyPreset('{{ key }}')">
+            {{ preset.title }}
+          </button>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="dashboard-grid">
+      <!-- Left Column: Soil & Climate Controls -->
+      <div class="card">
+        <div class="card-title">
+          <span>🧪 Field Soil & Climate Parameters</span>
+          <span style="font-size: 12px; font-weight: normal; color: var(--text-muted);">Adjust or drag sliders</span>
+        </div>
+
+        <form id="agri-form" onsubmit="event.preventDefault(); triggerPrediction();">
+          <!-- Nitrogen -->
+          <div class="input-group">
+            <div class="input-header">
+              <span class="input-label">🌱 Nitrogen (N)</span>
+              <input type="number" id="n_num" class="input-val-box" min="0" max="140" value="85" oninput="syncVal('n', this.value)">
+            </div>
+            <div class="slider-row">
+              <input type="range" id="n_range" min="0" max="140" value="85" oninput="syncVal('n', this.value)">
+            </div>
+            <div class="range-limits"><span>0 kg/ha</span><span>140 kg/ha</span></div>
+          </div>
+
+          <!-- Phosphorus -->
+          <div class="input-group">
+            <div class="input-header">
+              <span class="input-label">🪨 Phosphorus (P)</span>
+              <input type="number" id="p_num" class="input-val-box" min="5" max="145" value="45" oninput="syncVal('p', this.value)">
+            </div>
+            <div class="slider-row">
+              <input type="range" id="p_range" min="5" max="145" value="45" oninput="syncVal('p', this.value)">
+            </div>
+            <div class="range-limits"><span>5 kg/ha</span><span>145 kg/ha</span></div>
+          </div>
+
+          <!-- Potassium -->
+          <div class="input-group">
+            <div class="input-header">
+              <span class="input-label">⚡ Potassium (K)</span>
+              <input type="number" id="k_num" class="input-val-box" min="5" max="205" value="40" oninput="syncVal('k', this.value)">
+            </div>
+            <div class="slider-row">
+              <input type="range" id="k_range" min="5" max="205" value="40" oninput="syncVal('k', this.value)">
+            </div>
+            <div class="range-limits"><span>5 kg/ha</span><span>205 kg/ha</span></div>
+          </div>
+
+          <!-- Temperature -->
+          <div class="input-group">
+            <div class="input-header">
+              <span class="input-label">🌡️ Temperature</span>
+              <input type="number" step="0.1" id="temp_num" class="input-val-box" min="8" max="45" value="24.5" oninput="syncVal('temp', this.value)">
+            </div>
+            <div class="slider-row">
+              <input type="range" step="0.1" id="temp_range" min="8" max="45" value="24.5" oninput="syncVal('temp', this.value)">
+            </div>
+            <div class="range-limits"><span>8 °C</span><span>45 °C</span></div>
+          </div>
+
+          <!-- Humidity -->
+          <div class="input-group">
+            <div class="input-header">
+              <span class="input-label">💧 Relative Humidity</span>
+              <input type="number" step="0.1" id="hum_num" class="input-val-box" min="10" max="100" value="82.0" oninput="syncVal('hum', this.value)">
+            </div>
+            <div class="slider-row">
+              <input type="range" step="0.1" id="hum_range" min="10" max="100" value="82.0" oninput="syncVal('hum', this.value)">
+            </div>
+            <div class="range-limits"><span>10 %</span><span>100 %</span></div>
+          </div>
+
+          <!-- Soil pH -->
+          <div class="input-group">
+            <div class="input-header">
+              <span class="input-label">⚖️ Soil pH Level</span>
+              <input type="number" step="0.1" id="ph_num" class="input-val-box" min="3.5" max="10.0" value="6.5" oninput="syncVal('ph', this.value)">
+            </div>
+            <div class="slider-row">
+              <input type="range" step="0.1" id="ph_range" min="3.5" max="10.0" value="6.5" oninput="syncVal('ph', this.value)">
+            </div>
+            <div class="range-limits"><span>3.5 (Acidic)</span><span>7.0</span><span>10.0 (Alkaline)</span></div>
+          </div>
+
+          <!-- Rainfall -->
+          <div class="input-group">
+            <div class="input-header">
+              <span class="input-label">🌧️ Rainfall</span>
+              <input type="number" step="0.5" id="rain_num" class="input-val-box" min="20" max="300" value="230.0" oninput="syncVal('rain', this.value)">
+            </div>
+            <div class="slider-row">
+              <input type="range" step="0.5" id="rain_range" min="20" max="300" value="230.0" oninput="syncVal('rain', this.value)">
+            </div>
+            <div class="range-limits"><span>20 mm</span><span>300 mm</span></div>
+          </div>
+
+          <button type="submit" class="predict-btn">
+            <span>✨ Run ML Recommendation</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Right Column: Prediction & Advisory Engine -->
+      <div class="card">
+        <div class="card-title">
+          <span>🎯 Optimal Crop Recommendation</span>
+          <span id="pred-status" style="font-size: 12px; color: var(--primary);">Real-time Active</span>
+        </div>
+
+        <!-- Hero Card -->
+        <div class="hero-recommendation">
+          <div class="crop-avatar" id="hero-icon">🌾</div>
+          <div class="hero-info">
+            <div class="hero-top">
+              <span class="hero-crop-name" id="hero-title">Rice</span>
+              <span class="confidence-badge" id="hero-conf">99.7% Match</span>
+            </div>
+            <div class="hero-category" id="hero-cat">Cereal / Staple Grain</div>
+            <div class="hero-desc" id="hero-desc">Thrives in warm, humid climates with heavy rainfall or abundant flood irrigation.</div>
+          </div>
+        </div>
+
+        <!-- Soil Health Diagnostics -->
+        <div class="card-title" style="font-size: 15px; margin-bottom: 12px;">
+          <span>🩺 Soil Nutrient Health Diagnostics</span>
+        </div>
+        <div class="soil-grid">
+          <div class="soil-card">
+            <div class="soil-card-header">
+              <span class="soil-title">Nitrogen Status</span>
+              <span class="soil-badge" id="badge-n" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Optimal</span>
+            </div>
+            <div class="soil-tip" id="tip-n">Nitrogen is in a balanced, productive range.</div>
+          </div>
+
+          <div class="soil-card">
+            <div class="soil-card-header">
+              <span class="soil-title">Phosphorus Status</span>
+              <span class="soil-badge" id="badge-p" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Optimal</span>
+            </div>
+            <div class="soil-tip" id="tip-p">Phosphorus level is ideal for root development.</div>
+          </div>
+
+          <div class="soil-card">
+            <div class="soil-card-header">
+              <span class="soil-title">Potassium Status</span>
+              <span class="soil-badge" id="badge-k" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Optimal</span>
+            </div>
+            <div class="soil-tip" id="tip-k">Potassium level supports stress resilience.</div>
+          </div>
+
+          <div class="soil-card">
+            <div class="soil-card-header">
+              <span class="soil-title">Soil pH Status</span>
+              <span class="soil-badge" id="badge-ph" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Neutral</span>
+            </div>
+            <div class="soil-tip" id="tip-ph">Neutral pH offers peak nutrient bioavailability.</div>
+          </div>
+        </div>
+
+        <!-- Agronomic Tips -->
+        <div class="card-title" style="font-size: 15px; margin-bottom: 12px;">
+          <span>📋 Field Management & Care Guide</span>
+        </div>
+        <div class="care-grid">
+          <div class="care-box">
+            <div class="care-title">💧 Irrigation Needs</div>
+            <div class="care-desc" id="care-water">High (Standing water required during early growth)</div>
+          </div>
+          <div class="care-box">
+            <div class="care-title">🧱 Recommended Soil Type</div>
+            <div class="care-desc" id="care-soil">Clayey or heavy loamy soil with high moisture retention</div>
+          </div>
+          <div class="care-box">
+            <div class="care-title">🧪 Fertilizer Protocol</div>
+            <div class="care-desc" id="care-fert">Apply Nitrogen in 3 split doses: basal, tillering, and panicle initiation.</div>
+          </div>
+          <div class="care-box">
+            <div class="care-title">☀️ Ideal Growing Season</div>
+            <div class="care-desc" id="care-season">Kharif (Monsoon / Summer)</div>
+          </div>
+        </div>
+
+        <!-- Runner Up Crops -->
+        <div class="card-title" style="font-size: 15px; margin-bottom: 8px;">
+          <span>📊 Alternative Compatible Crops</span>
+        </div>
+        <div class="runners-list" id="runners-container">
+          <!-- Populated by JS -->
+        </div>
+
+        <div style="margin-top: 16px;">
+          <a id="download-report-btn" href="#" target="_blank" class="report-link-btn">
+            <span>📄 View Official Advisory Report</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- History Card -->
+    <div class="history-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <span style="font-size: 16px; font-weight: 700;">📜 Field Analysis History</span>
+        <button class="clear-btn" onclick="clearHistoryLog()">Clear History</button>
+      </div>
+      <div style="overflow-x: auto;">
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Location</th>
+              <th>N-P-K</th>
+              <th>Temp / Hum / Rain</th>
+              <th>Soil pH</th>
+              <th>Recommended Crop</th>
+              <th>Confidence</th>
+              <th>Report</th>
+            </tr>
+          </thead>
+          <tbody id="history-tbody">
+            <tr><td colspan="8" style="text-align: center; color: var(--text-muted);">No records yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      AgroAI Machine Learning Project • Built with Python, Flask, Gaussian Naive Bayes & K-NN algorithms.
+    </footer>
+  </div>
+
+  <script>
+    const PRESETS = {{ presets | tojson }};
+    const CROP_CATALOG = {{ crop_catalog | tojson }};
+    let currentWeatherState = {
+      location: "Bengaluru, India",
+      temperature: 25.6,
+      humidity: 45.0,
+      rainfall: 65.0
+    };
+    let latestRecordId = 1;
+    let selectedExplorerCrop = null;
+
+    function syncVal(key, val) {
+      document.getElementById(`${key}_range`).value = val;
+      document.getElementById(`${key}_num`).value = val;
+      // If a crop is currently open in explorer, update its live compatibility
+      if (selectedExplorerCrop) {
+        checkCropCompatibility(selectedExplorerCrop.id);
+      }
+    }
+
+    function applyPreset(presetKey) {
+      const p = PRESETS[presetKey];
+      if (!p) return;
+      const v = p.values;
+      syncVal('n', v.n);
+      syncVal('p', v.p);
+      syncVal('k', v.k);
+      syncVal('temp', v.temperature);
+      syncVal('hum', v.humidity);
+      syncVal('ph', v.ph);
+      syncVal('rain', v.rainfall);
+      triggerPrediction();
+    }
+
+    // Crop Search & Explorer
+    function onCropSelectChange(cropId) {
+      if (!cropId) {
+        document.getElementById('crop_detail_card').style.display = 'none';
+        selectedExplorerCrop = null;
+        return;
+      }
+      const crop = CROP_CATALOG.find(c => c.id === cropId);
+      if (!crop) return;
+      selectedExplorerCrop = crop;
+
+      document.getElementById('crop_detail_card').style.display = 'block';
+      document.getElementById('exp_icon').innerText = crop.icon || '🌱';
+      document.getElementById('exp_title').innerText = crop.title || crop.id;
+      document.getElementById('exp_cat').innerText = `${crop.category} • Season: ${crop.growing_season || 'Standard'}`;
+      document.getElementById('exp_desc').innerText = crop.description || '';
+
+      const pRow = document.getElementById('exp_params_row');
+      const p = crop.ideal_profile || {};
+      pRow.innerHTML = `
+        <span class="param-pill">Ideal N: <strong>${p.N || '--'}</strong></span>
+        <span class="param-pill">Ideal P: <strong>${p.P || '--'}</strong></span>
+        <span class="param-pill">Ideal K: <strong>${p.K || '--'}</strong></span>
+        <span class="param-pill">Ideal pH: <strong>${p.ph || '--'}</strong></span>
+        <span class="param-pill">Temp: <strong>${p.temperature || '--'}°C</strong></span>
+        <span class="param-pill">Humidity: <strong>${p.humidity || '--'}%</strong></span>
+        <span class="param-pill">Rainfall: <strong>${p.rainfall || '--'} mm</strong></span>
+      `;
+
+      checkCropCompatibility(cropId);
+    }
+
+    async function checkCropCompatibility(cropId) {
+      const payload = {
+        n: parseFloat(document.getElementById('n_num').value),
+        p: parseFloat(document.getElementById('p_num').value),
+        k: parseFloat(document.getElementById('k_num').value),
+        temperature: parseFloat(document.getElementById('temp_num').value),
+        humidity: parseFloat(document.getElementById('hum_num').value),
+        ph: parseFloat(document.getElementById('ph_num').value),
+        rainfall: parseFloat(document.getElementById('rain_num').value)
+      };
+
+      try {
+        const resp = await fetch(`/api/crops/${cropId}/compatibility`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await resp.json();
+        if (data.status === 'success') {
+          const score = data.analysis.compatibility_score;
+          const scoreEl = document.getElementById('exp_compat_score');
+          scoreEl.innerText = `${score}%`;
+          scoreEl.style.color = score >= 75 ? '#34d399' : (score >= 50 ? '#f59e0b' : '#ef4444');
+
+          const gapsBox = document.getElementById('exp_gaps_box');
+          if (data.analysis.gaps && data.analysis.gaps.length > 0) {
+            gapsBox.innerHTML = '⚠️ <strong>Adjustment required:</strong> ' + data.analysis.gaps.map(g => g.message).join(' | ');
+          } else {
+            gapsBox.innerHTML = '✅ <strong>Excellent conditions:</strong> Your current field parameters closely match this crop!';
+            gapsBox.style.color = '#34d399';
+          }
+        }
+      } catch (e) {
+        console.error('Crop compatibility error:', e);
+      }
+    }
+
+    function loadIdealCropParams() {
+      if (!selectedExplorerCrop || !selectedExplorerCrop.ideal_profile) return;
+      const p = selectedExplorerCrop.ideal_profile;
+      syncVal('n', Math.round(p.N));
+      syncVal('p', Math.round(p.P));
+      syncVal('k', Math.round(p.K));
+      syncVal('temp', p.temperature);
+      syncVal('hum', p.humidity);
+      syncVal('ph', p.ph);
+      syncVal('rain', p.rainfall);
+      triggerPrediction();
+    }
+
+    // Weather & Location Logic
+    async function fetchWeatherByCity() {
+      const city = document.getElementById('city_search_input').value.trim();
+      if (!city) return;
+      try {
+        const resp = await fetch(`/api/weather/city?q=${encodeURIComponent(city)}`);
+        const data = await resp.json();
+        if (data.success) {
+          updateWeatherUI(data);
+        } else {
+          showErrorModal(data.error || `Could not find location for '${city}'.`, 'Error of place');
+        }
+      } catch (err) {
+        console.error('Weather fetch error:', err);
+        showErrorModal('Unable to connect to weather service. Please check your connection.', 'Error of place');
+      }
+    }
+
+    function detectUserLocation() {
+      if (!navigator.geolocation) {
+        showErrorModal("Geolocation is not supported by your browser.", "Error of place");
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(async (pos) => {
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+        try {
+          const resp = await fetch(`/api/weather/coords?lat=${lat}&lon=${lon}`);
+          const data = await resp.json();
+          if (data.success) {
+            updateWeatherUI(data);
+          } else {
+            showErrorModal("Could not determine weather for current GPS coordinates.", "Error of place");
+          }
+        } catch (err) {
+          console.error("GPS weather error:", err);
+          showErrorModal("GPS weather lookup failed.", "Error of place");
+        }
+      }, (err) => {
+        showErrorModal("Location access denied or unavailable: " + err.message, "Error of place");
+      });
+    }
+
+    function updateWeatherUI(data) {
+      currentWeatherState = {
+        location: data.location || data.city || "Current Location",
+        temperature: data.temperature,
+        humidity: data.humidity,
+        rainfall: data.estimated_rainfall
+      };
+
+      document.getElementById('w_icon').innerText = data.icon || "☀️";
+      document.getElementById('w_loc_name').innerText = currentWeatherState.location;
+      document.getElementById('w_condition').innerText = data.condition || "Fair";
+      document.getElementById('w_temp').innerText = `🌡️ ${data.temperature}°C`;
+      document.getElementById('w_hum').innerText = `💧 ${data.humidity}%`;
+      document.getElementById('w_rain').innerText = `🌧️ ${data.estimated_rainfall} mm`;
+    }
+
+    function applyLiveWeather() {
+      syncVal('temp', currentWeatherState.temperature);
+      syncVal('hum', currentWeatherState.humidity);
+      syncVal('rain', currentWeatherState.rainfall);
+      triggerPrediction();
+    }
+
+    async function triggerPrediction() {
+      const payload = {
+        n: parseFloat(document.getElementById('n_num').value),
+        p: parseFloat(document.getElementById('p_num').value),
+        k: parseFloat(document.getElementById('k_num').value),
+        temperature: parseFloat(document.getElementById('temp_num').value),
+        humidity: parseFloat(document.getElementById('hum_num').value),
+        ph: parseFloat(document.getElementById('ph_num').value),
+        rainfall: parseFloat(document.getElementById('rain_num').value),
+        location: currentWeatherState.location
+      };
+
+      try {
+        const response = await fetch('/api/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await response.json();
+        if (data.status === 'success') {
+          renderResult(data.result);
+          if (data.result.record_id) {
+            latestRecordId = data.result.record_id;
+            document.getElementById('download-report-btn').href = `/report/${latestRecordId}`;
+          }
+          loadHistory();
+        }
+      } catch (err) {
+        console.error('Prediction request error:', err);
+      }
+    }
+
+    function renderResult(res) {
+      const primary = res.primary_details;
+      document.getElementById('hero-icon').innerText = primary.icon || '🌱';
+      document.getElementById('hero-title').innerText = primary.title || res.primary_crop;
+      document.getElementById('hero-conf').innerText = `${res.primary_confidence}% Match`;
+      document.getElementById('hero-cat').innerText = primary.category || 'Agricultural Crop';
+      document.getElementById('hero-desc').innerText = primary.description || '';
+
+      // Care Guide
+      document.getElementById('care-water').innerText = primary.water_req || 'Standard irrigation';
+      document.getElementById('care-soil').innerText = primary.soil_type || 'Loamy soil';
+      document.getElementById('care-fert').innerText = primary.fertilizer_tip || 'Balanced NPK dosage';
+      document.getElementById('care-season').innerText = primary.growing_season || 'Standard season';
+
+      // Soil Health
+      const s = res.soil_health;
+      updateSoilBadge('n', s.N);
+      updateSoilBadge('p', s.P);
+      updateSoilBadge('k', s.K);
+      updateSoilBadge('ph', s.pH);
+
+      // Runner-ups
+      const runnersList = document.getElementById('runners-container');
+      runnersList.innerHTML = '';
+      res.top_recommendations.slice(1).forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'runner-item';
+        row.innerHTML = `
+          <div class="runner-name">${item.details.icon || '🌱'} ${item.details.title || item.crop}</div>
+          <div class="runner-bar-wrap">
+            <div class="runner-bar" style="width: ${item.confidence}%;"></div>
+          </div>
+          <div class="runner-pct">${item.confidence}%</div>
+        `;
+        runnersList.appendChild(row);
+      });
+    }
+
+    function updateSoilBadge(key, healthObj) {
+      const badge = document.getElementById(`badge-${key}`);
+      const tip = document.getElementById(`tip-${key}`);
+      badge.innerText = healthObj.badge || healthObj.status;
+      badge.style.background = `${healthObj.color}22`;
+      badge.style.color = healthObj.color;
+      tip.innerText = healthObj.tip;
+    }
+
+    async function loadHistory() {
+      try {
+        const resp = await fetch('/api/history');
+        const data = await resp.json();
+        const tbody = document.getElementById('history-tbody');
+        if (data.history && data.history.length > 0) {
+          tbody.innerHTML = '';
+          data.history.forEach(item => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${item.timestamp.split(' ')[1] || item.timestamp}</td>
+              <td>${item.location || 'Custom'}</td>
+              <td><code>${item.n}-${item.p}-${item.k}</code></td>
+              <td>${item.temperature}°C / ${item.humidity}% / ${item.rainfall}mm</td>
+              <td>${item.ph}</td>
+              <td><strong>${item.predicted_crop.toUpperCase()}</strong></td>
+              <td><span style="color: #34d399; font-weight: bold;">${item.confidence}%</span></td>
+              <td><a href="/report/${item.id}" target="_blank" style="color: #60a5fa; text-decoration: none;">View</a></td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
+      } catch (e) {
+        console.error('History load error:', e);
+      }
+    }
+
+    async function clearHistoryLog() {
+      await fetch('/api/history', { method: 'DELETE' });
+      document.getElementById('history-tbody').innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted);">History cleared.</td></tr>';
+    }
+
+    // Custom Error of place Modal Logic
+    function showErrorModal(message, title = "Error of place") {
+      document.getElementById('modal-title-text').innerText = title;
+      document.getElementById('modal-body-text').innerText = message;
+      document.getElementById('custom-error-modal').classList.add('active');
+      const okBtn = document.getElementById('modal-ok-btn');
+      if (okBtn) okBtn.focus();
+    }
+
+    function closeCustomModal() {
+      const modal = document.getElementById('custom-error-modal');
+      if (modal) modal.classList.remove('active');
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeCustomModal();
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      triggerPrediction();
+      loadHistory();
+    });
+  </script>
+
+  <!-- Custom Error Modal ("Error of place") -->
+  <div id="custom-error-modal" class="custom-modal-overlay" onclick="if(event.target===this) closeCustomModal();">
+    <div class="custom-modal-box">
+      <div class="custom-modal-header">
+        <div class="custom-modal-title">
+          <span>⚠️</span>
+          <span id="modal-title-text">Error of place</span>
+        </div>
+        <button class="custom-modal-close-x" onclick="closeCustomModal()" title="Close">&times;</button>
+      </div>
+      <div class="custom-modal-body" id="modal-body-text">
+        Could not find location.
+      </div>
+      <div class="custom-modal-footer">
+        <button id="modal-ok-btn" class="custom-modal-ok-btn" onclick="closeCustomModal()">OK</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
