@@ -1,8 +1,20 @@
-# 🌾 AgroAI - Smart Crop Recommendation & Soil Health Analyzer
-### *With Real-Time Location, Live Weather & Agricultural Advisory Reports*
+# 🌱 AgroAI – Crop & Soil Recommender
 
-An end-to-end Machine Learning and Full-Stack web application that predicts the most suitable crops for cultivation based on soil chemical parameters, real-time live weather, and climate indicators, complete with an agronomic soil health diagnostic engine and field care advice.
+An AI-powered application that recommends suitable crops based on soil and environmental conditions.
 
+## 🚀 Live Demo
+
+[Click Here to Open AgroAI](https://agroai-crop-soil-recommender-2.onrender.com/)
+
+## 🛠️ Technologies Used
+- Python
+- Machine Learning
+- HTML
+- CSS
+- JavaScript
+
+## 🌐 Deployment
+Hosted on Render.
 ---
 
 ## 🌟 Key Features
