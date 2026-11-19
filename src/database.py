@@ -6,10 +6,18 @@ import os
 import sqlite3
 from datetime import datetime
 
-DB_PATH = os.path.join("data", "agroai_history.db")
+# Resolve base project directory dynamically
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+if os.path.basename(CURRENT_DIR) == "src":
+    BASE_DIR = os.path.abspath(os.path.join(CURRENT_DIR, ".."))
+else:
+    BASE_DIR = CURRENT_DIR
+
+DATA_DIR = os.path.join(BASE_DIR, "data")
+DB_PATH = os.path.join(DATA_DIR, "agroai_history.db")
 
 def init_db():
-    os.makedirs("data", exist_ok=True)
+    os.makedirs(DATA_DIR, exist_ok=True)
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor.execute("""
@@ -40,7 +48,20 @@ def save_prediction(location, n, p, k, temperature, humidity, ph, rainfall, pred
     cursor.execute("""
         INSERT INTO predictions (timestamp, location, n, p, k, temperature, humidity, ph, rainfall, predicted_crop, confidence, soil_status)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    """, (ts, location or "Custom Field", n, p, k, temperature, humidity, ph, rainfall, predicted_crop, confidence, soil_status))
+    """, (
+        ts,
+        location or "Custom Field",
+        float(n),
+        float(p),
+        float(k),
+        float(temperature),
+        float(humidity),
+        float(ph),
+        float(rainfall),
+        str(predicted_crop),
+        float(confidence),
+        str(soil_status)
+    ))
     rec_id = cursor.lastrowid
     conn.commit()
     conn.close()

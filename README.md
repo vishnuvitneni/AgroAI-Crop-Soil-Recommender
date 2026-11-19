@@ -2,6 +2,19 @@
 
 An end-to-end Machine Learning and Full-Stack web application designed to solve real-world farmer challenges: precision crop recommendation, reliable village-level weather forecasts, live Mandi commodity prices, nearby fertilizer shop discovery, and interactive agronomic calculators.
 
+## 🚀 Live Demo
+
+[Click Here to Open AgroAI](https://agroai-crop-soil-recommender-2.onrender.com/)
+
+## 🛠️ Technologies Used
+- Python
+- Machine Learning
+- HTML
+- CSS
+- JavaScript
+
+## 🌐 Deployment
+Hosted on Render.
 ---
 
 ## 🌟 Key Subsystems & Features
