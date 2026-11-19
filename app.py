@@ -8,6 +8,9 @@ from flask import Flask, render_template, request, jsonify
 from src.recommend import CropAdvisoryEngine, CROP_DETAILS
 from src.weather_service import get_weather_by_city, get_weather_by_coords
 from src.database import save_prediction, get_history, get_prediction_by_id, clear_history
+from src.market_rates import get_all_market_rates, get_commodity_by_id
+from src.shops_service import get_nearby_shops
+from src.farmer_tools import calculate_fertilizer_bags, get_pest_and_disease_guide, get_helplines, CROP_FERT_GUIDELINES
 
 app = Flask(__name__)
 engine = CropAdvisoryEngine()
@@ -45,11 +48,57 @@ def index():
     meta = engine.meta
     benchmarks = meta.get("model_benchmarks", {})
     crop_catalog = engine.get_crop_catalog()
+    market_rates = get_all_market_rates()
+    diseases = get_pest_and_disease_guide()
+    helplines = get_helplines()
     return render_template("index.html", 
                            presets=PRESETS, 
                            benchmarks=benchmarks, 
                            crop_catalog=crop_catalog,
+                           market_rates=market_rates,
+                           fert_crops=CROP_FERT_GUIDELINES,
+                           diseases=diseases,
+                           helplines=helplines,
                            crop_count=len(CROP_DETAILS))
+
+@app.route("/api/market-rates", methods=["GET"])
+def api_market_rates():
+    cat = request.args.get("category", "")
+    q = request.args.get("q", "")
+    rates = get_all_market_rates(category=cat, query=q)
+    return jsonify({"status": "success", "rates": rates})
+
+@app.route("/api/shops", methods=["GET"])
+def api_shops():
+    loc = request.args.get("location", "Hyderabad, Telangana")
+    lat = request.args.get("lat")
+    lon = request.args.get("lon")
+    lat_val = float(lat) if lat and lat != "undefined" else None
+    lon_val = float(lon) if lon and lon != "undefined" else None
+    shops_data = get_nearby_shops(location_name=loc, lat=lat_val, lon=lon_val)
+    return jsonify({"status": "success", "data": shops_data})
+
+@app.route("/api/fertilizer-calc", methods=["POST"])
+def api_fertilizer_calc():
+    try:
+        data = request.get_json(force=True)
+        crop = data.get("crop", "rice")
+        land_size = float(data.get("land_size", 1.0))
+        unit = data.get("unit", "acre")
+        calc = calculate_fertilizer_bags(crop, land_size, unit)
+        return jsonify({"status": "success", "calc": calc})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
+
+@app.route("/api/disease-guide", methods=["GET"])
+def api_disease_guide():
+    q = request.args.get("q", "")
+    guide = get_pest_and_disease_guide(q)
+    return jsonify({"status": "success", "diseases": guide})
+
+@app.route("/api/helplines", methods=["GET"])
+def api_helplines():
+    return jsonify({"status": "success", "helplines": get_helplines()})
 
 @app.route("/api/crops", methods=["GET"])
 def api_crops():

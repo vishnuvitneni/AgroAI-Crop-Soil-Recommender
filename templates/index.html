@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AgroAI - Intelligent Crop & Soil Health Advisor</title>
+  <title>AgroAI - Farmer Decision Support & Agriculture Platform</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -34,12 +34,12 @@
       background-color: var(--bg);
       color: var(--text-main);
       min-height: 100vh;
-      padding: 24px;
+      padding: 20px;
       line-height: 1.5;
     }
 
     .container {
-      max-width: 1340px;
+      max-width: 1360px;
       margin: 0 auto;
     }
 
@@ -48,9 +48,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 20px;
+      padding-bottom: 18px;
       border-bottom: 1px solid var(--card-border);
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
       gap: 16px;
     }
@@ -112,13 +112,51 @@
       color: #34d399;
     }
 
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid var(--card-border);
+      padding-bottom: 12px;
+      overflow-x: auto;
+    }
+
+    .nav-tab-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      color: #d1d5db;
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .nav-tab-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+    }
+
+    .nav-tab-btn.active {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 78, 59, 0.4));
+      border-color: var(--primary);
+      color: #34d399;
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
     /* Location & Weather Bar */
     .weather-panel {
       background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.8));
       border: 1px solid rgba(59, 130, 246, 0.25);
       border-radius: var(--radius);
       padding: 16px 20px;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -257,6 +295,97 @@
 
     .apply-weather-btn:hover {
       transform: translateY(-1px);
+    }
+
+    .forecast-toggle-btn {
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      color: #93c5fd;
+      padding: 9px 13px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .forecast-toggle-btn:hover {
+      background: rgba(59, 130, 246, 0.25);
+    }
+
+    /* 5-Day Forecast Drawer */
+    .forecast-box {
+      display: none;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 12px;
+      width: 100%;
+    }
+
+    .forecast-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 800px) {
+      .forecast-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .forecast-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .fc-date {
+      font-size: 12px;
+      font-weight: 700;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+
+    .fc-icon {
+      font-size: 24px;
+      margin: 4px 0;
+    }
+
+    .fc-temp {
+      font-size: 13px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .fc-rain {
+      font-size: 11px;
+      color: #60a5fa;
+      margin: 2px 0 6px;
+    }
+
+    .fc-advice {
+      font-size: 10.5px;
+      color: #d1d5db;
+      line-height: 1.3;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 4px 6px;
+      border-radius: 6px;
+    }
+
+    /* Section Visibility */
+    .tab-section {
+      display: none;
+    }
+
+    .tab-section.active {
+      display: block;
     }
 
     /* Crop Explorer Bar */
@@ -825,6 +954,376 @@
       background: rgba(239, 68, 68, 0.15);
     }
 
+    /* Mandi Rates Styling */
+    .mandi-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .mandi-filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: #d1d5db;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: var(--primary);
+      color: #34d399;
+    }
+
+    .mandi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 16px;
+    }
+
+    .mandi-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .mandi-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+
+    .mandi-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .mandi-name-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mandi-icon {
+      font-size: 28px;
+    }
+
+    .mandi-comm-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .mandi-cat {
+      font-size: 11px;
+      color: #9ca3af;
+    }
+
+    .trend-pill {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .trend-rising {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+    }
+
+    .trend-falling {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+    }
+
+    .trend-stable {
+      background: rgba(59, 130, 246, 0.2);
+      color: #93c5fd;
+    }
+
+    .mandi-price-box {
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .mandi-price-val {
+      font-size: 22px;
+      font-weight: 800;
+      color: #34d399;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .mandi-kg-val {
+      font-size: 13px;
+      color: #d1d5db;
+    }
+
+    .mandi-range-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #9ca3af;
+      margin-bottom: 8px;
+    }
+
+    .mandi-hub {
+      font-size: 11.5px;
+      color: #cbd5e1;
+      line-height: 1.3;
+    }
+
+    /* Shops Styling */
+    .shops-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .shop-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .shop-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .shop-icon {
+      font-size: 30px;
+    }
+
+    .shop-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: white;
+      line-height: 1.3;
+    }
+
+    .shop-badge {
+      font-size: 11px;
+      color: #34d399;
+      font-weight: 600;
+    }
+
+    .shop-details {
+      font-size: 13px;
+      color: #d1d5db;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .shop-prods {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .prod-tag {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      color: #94a3b8;
+    }
+
+    .map-dir-btn {
+      background: #3b82f6;
+      color: white;
+      text-decoration: none;
+      padding: 9px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+
+    .map-dir-btn:hover {
+      background: #2563eb;
+    }
+
+    /* Farmer Tools Styling */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .calc-box {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
+    .calc-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .calc-input {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 8px 12px;
+      color: white;
+      font-size: 14px;
+      outline: none;
+      flex: 1;
+    }
+
+    .calc-btn {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .calc-result-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .fert-bag-card {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .fert-bag-count {
+      font-size: 22px;
+      font-weight: 800;
+      color: #34d399;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .fert-bag-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .fert-bag-timing {
+      font-size: 10.5px;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+
+    .pest-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .pest-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+
+    .pest-diag {
+      font-size: 15px;
+      font-weight: 700;
+      color: #f87171;
+    }
+
+    .pest-sym {
+      font-size: 13px;
+      color: #e5e7eb;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .remedy-box {
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      margin-bottom: 4px;
+      line-height: 1.35;
+    }
+
+    .remedy-organic {
+      background: rgba(16, 185, 129, 0.1);
+      border-left: 3px solid #10b981;
+      color: #a7f3d0;
+    }
+
+    .remedy-chem {
+      background: rgba(245, 158, 11, 0.1);
+      border-left: 3px solid #f59e0b;
+      color: #fde68a;
+    }
+
+    .helpline-box {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(15, 23, 42, 0.8));
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: 14px;
+    }
+
+    .helpline-num {
+      font-size: 18px;
+      font-weight: 800;
+      color: #60a5fa;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
     /* Custom Modal Popup ("Error of place") */
     .custom-modal-overlay {
       position: fixed;
@@ -948,28 +1447,44 @@
       <div class="logo-badge">
         <div class="logo-icon">🌾</div>
         <div class="logo-text">
-          <h1>AgroAI Crop & Soil Recommender</h1>
-          <p>Machine Learning + Live Weather + Crop Compatibility Explorer</p>
+          <h1>AgroAI Farmer Support & Crop Recommender</h1>
+          <p>Machine Learning • Live Weather • Market Mandi Rates • Nearby Shops • Problem Solving</p>
         </div>
       </div>
       <div class="header-badges">
         <div class="chip chip-green">
           <span>●</span>
-          <span>Gaussian Naive Bayes: 99.32% Accuracy</span>
+          <span>99.32% ML Accuracy</span>
         </div>
         <div class="chip">
-          <span>K-NN (k=5): 97.95%</span>
+          <span>APMC Mandi Rates</span>
         </div>
         <div class="chip">
-          <span>22 Supported Crops</span>
+          <span>Fertilizer Dealers & Labs</span>
         </div>
       </div>
     </header>
 
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+      <button class="nav-tab-btn active" onclick="switchTab('recommender')">
+        🌾 Crop & Soil Recommendation
+      </button>
+      <button class="nav-tab-btn" onclick="switchTab('market')">
+        📈 Live Mandi & Vegetable Rates
+      </button>
+      <button class="nav-tab-btn" onclick="switchTab('shops')">
+        🏪 Nearby Fertilizer & Agri Shops
+      </button>
+      <button class="nav-tab-btn" onclick="switchTab('toolkit')">
+        🧮 Fertilizer Calculator & Plant Doctor
+      </button>
+    </div>
+
     <!-- Location & Live Weather Bar -->
     <div class="weather-panel">
       <div class="weather-search-wrap">
-        <input type="text" id="city_search_input" class="city-input" placeholder="Search City Weather (e.g. Hyderabad, Mumbai, London, Nairobi...)" onkeypress="if(event.key==='Enter') fetchWeatherByCity();">
+        <input type="text" id="city_search_input" class="city-input" placeholder="Search City/Village (e.g. Mudivedu, Bengaluru, Hyderabad, Guntur, Delhi...)" onkeypress="if(event.key==='Enter') fetchWeatherByCity();">
         <button class="weather-btn" onclick="fetchWeatherByCity()">🔍 Search</button>
         <button class="gps-btn" onclick="detectUserLocation()" title="Use GPS Location">📍 GPS</button>
       </div>
@@ -991,315 +1506,551 @@
         <button class="apply-weather-btn" onclick="applyLiveWeather()">
           <span>⚡ Auto-Fill Weather</span>
         </button>
+
+        <button class="forecast-toggle-btn" onclick="toggleForecastDrawer()">
+          <span>📅 5-Day Forecast</span>
+        </button>
+      </div>
+
+      <!-- 5-Day Forecast Drawer -->
+      <div id="forecast-drawer" class="forecast-box">
+        <div style="font-size: 13px; font-weight: 700; color: #93c5fd; margin-bottom: 8px;">
+          🌤️ 5-Day Agricultural Weather & Spraying Outlook for <span id="fc-loc-name">Your Location</span>:
+        </div>
+        <div class="forecast-grid" id="forecast-grid-container">
+          <!-- Populated by JS -->
+        </div>
       </div>
     </div>
 
-    <!-- Crop Search & Compatibility Bar -->
-    <div class="crop-search-panel">
-      <div class="crop-search-header">
-        <div class="crop-search-title">
-          <span>🔍 Search & Explore Any Specific Crop (22 Supported):</span>
+    <!-- ========================================================================= -->
+    <!-- TAB 1: CROP & SOIL RECOMMENDATION -->
+    <!-- ========================================================================= -->
+    <div id="tab-recommender" class="tab-section active">
+      <!-- Crop Search & Compatibility Bar -->
+      <div class="crop-search-panel">
+        <div class="crop-search-header">
+          <div class="crop-search-title">
+            <span>🔍 Search & Explore Any Specific Crop (22 Supported):</span>
+          </div>
+          <div class="crop-dropdown-wrap">
+            <select id="crop_explorer_select" class="crop-select" onchange="onCropSelectChange(this.value)">
+              <option value="">-- Choose or search a crop to check suitability --</option>
+              {% for c in crop_catalog %}
+                <option value="{{ c.id }}">{{ c.icon }} {{ c.title }} ({{ c.category }})</option>
+              {% endfor %}
+            </select>
+          </div>
         </div>
-        <div class="crop-dropdown-wrap">
-          <select id="crop_explorer_select" class="crop-select" onchange="onCropSelectChange(this.value)">
-            <option value="">-- Choose or search a crop to check suitability --</option>
-            {% for c in crop_catalog %}
-              <option value="{{ c.id }}">{{ c.icon }} {{ c.title }} ({{ c.category }})</option>
-            {% endfor %}
-          </select>
-        </div>
-      </div>
 
-      <!-- Crop Detail & Compatibility Box -->
-      <div id="crop_detail_card" class="crop-detail-card">
-        <div class="crop-detail-top">
-          <div class="crop-detail-info">
-            <div id="exp_icon" class="crop-detail-icon">🌱</div>
-            <div>
-              <div id="exp_title" style="font-size: 18px; font-weight: 700; color: white;">Crop Name</div>
-              <div id="exp_cat" style="font-size: 12px; color: #34d399;">Category</div>
+        <!-- Crop Detail & Compatibility Box -->
+        <div id="crop_detail_card" class="crop-detail-card">
+          <div class="crop-detail-top">
+            <div class="crop-detail-info">
+              <div id="exp_icon" class="crop-detail-icon">🌱</div>
+              <div>
+                <div id="exp_title" style="font-size: 18px; font-weight: 700; color: white;">Crop Name</div>
+                <div id="exp_cat" style="font-size: 12px; color: #34d399;">Category</div>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <div class="compat-gauge">
+                <span style="font-size: 12px; color: #9ca3af;">Suitability for Your Current Field:</span>
+                <span id="exp_compat_score" class="compat-score">--%</span>
+              </div>
+              <button class="load-crop-btn" onclick="loadIdealCropParams()">
+                ⚡ Set Sliders to Ideal Conditions
+              </button>
             </div>
           </div>
 
-          <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-            <div class="compat-gauge">
-              <span style="font-size: 12px; color: #9ca3af;">Suitability for Your Current Field:</span>
-              <span id="exp_compat_score" class="compat-score">--%</span>
-            </div>
-            <button class="load-crop-btn" onclick="loadIdealCropParams()">
-              ⚡ Set Sliders to Ideal Conditions
+          <div style="font-size: 13px; color: #d1d5db; margin-bottom: 10px;" id="exp_desc"></div>
+
+          <div class="crop-params-row" id="exp_params_row">
+            <!-- Populated by JS -->
+          </div>
+
+          <div id="exp_gaps_box" style="font-size: 12px; color: #f59e0b; margin-top: 6px;"></div>
+        </div>
+      </div>
+
+      <!-- Presets Toolbar -->
+      <div class="presets-bar">
+        <div class="presets-label">⚡ Quick Agricultural Field Presets:</div>
+        <div class="presets-list">
+          {% for key, preset in presets.items() %}
+            <button class="preset-btn" onclick="applyPreset('{{ key }}')">
+              {{ preset.title }}
             </button>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Main Grid -->
+      <div class="dashboard-grid">
+        <!-- Left Column: Soil & Climate Controls -->
+        <div class="card">
+          <div class="card-title">
+            <span>🧪 Field Soil & Climate Parameters</span>
+            <span style="font-size: 12px; font-weight: normal; color: var(--text-muted);">Adjust or drag sliders</span>
+          </div>
+
+          <form id="agri-form" onsubmit="event.preventDefault(); triggerPrediction();">
+            <!-- Nitrogen -->
+            <div class="input-group">
+              <div class="input-header">
+                <span class="input-label">🌱 Nitrogen (N)</span>
+                <input type="number" id="n_num" class="input-val-box" min="0" max="140" value="85" oninput="syncVal('n', this.value)">
+              </div>
+              <div class="slider-row">
+                <input type="range" id="n_range" min="0" max="140" value="85" oninput="syncVal('n', this.value)">
+              </div>
+              <div class="range-limits"><span>0 kg/ha</span><span>140 kg/ha</span></div>
+            </div>
+
+            <!-- Phosphorus -->
+            <div class="input-group">
+              <div class="input-header">
+                <span class="input-label">🪨 Phosphorus (P)</span>
+                <input type="number" id="p_num" class="input-val-box" min="5" max="145" value="45" oninput="syncVal('p', this.value)">
+              </div>
+              <div class="slider-row">
+                <input type="range" id="p_range" min="5" max="145" value="45" oninput="syncVal('p', this.value)">
+              </div>
+              <div class="range-limits"><span>5 kg/ha</span><span>145 kg/ha</span></div>
+            </div>
+
+            <!-- Potassium -->
+            <div class="input-group">
+              <div class="input-header">
+                <span class="input-label">⚡ Potassium (K)</span>
+                <input type="number" id="k_num" class="input-val-box" min="5" max="205" value="40" oninput="syncVal('k', this.value)">
+              </div>
+              <div class="slider-row">
+                <input type="range" id="k_range" min="5" max="205" value="40" oninput="syncVal('k', this.value)">
+              </div>
+              <div class="range-limits"><span>5 kg/ha</span><span>205 kg/ha</span></div>
+            </div>
+
+            <!-- Temperature -->
+            <div class="input-group">
+              <div class="input-header">
+                <span class="input-label">🌡️ Temperature</span>
+                <input type="number" step="0.1" id="temp_num" class="input-val-box" min="8" max="45" value="24.5" oninput="syncVal('temp', this.value)">
+              </div>
+              <div class="slider-row">
+                <input type="range" step="0.1" id="temp_range" min="8" max="45" value="24.5" oninput="syncVal('temp', this.value)">
+              </div>
+              <div class="range-limits"><span>8 °C</span><span>45 °C</span></div>
+            </div>
+
+            <!-- Humidity -->
+            <div class="input-group">
+              <div class="input-header">
+                <span class="input-label">💧 Relative Humidity</span>
+                <input type="number" step="0.1" id="hum_num" class="input-val-box" min="10" max="100" value="82.0" oninput="syncVal('hum', this.value)">
+              </div>
+              <div class="slider-row">
+                <input type="range" step="0.1" id="hum_range" min="10" max="100" value="82.0" oninput="syncVal('hum', this.value)">
+              </div>
+              <div class="range-limits"><span>10 %</span><span>100 %</span></div>
+            </div>
+
+            <!-- Soil pH -->
+            <div class="input-group">
+              <div class="input-header">
+                <span class="input-label">⚖️ Soil pH Level</span>
+                <input type="number" step="0.1" id="ph_num" class="input-val-box" min="3.5" max="10.0" value="6.5" oninput="syncVal('ph', this.value)">
+              </div>
+              <div class="slider-row">
+                <input type="range" step="0.1" id="ph_range" min="3.5" max="10.0" value="6.5" oninput="syncVal('ph', this.value)">
+              </div>
+              <div class="range-limits"><span>3.5 (Acidic)</span><span>7.0</span><span>10.0 (Alkaline)</span></div>
+            </div>
+
+            <!-- Rainfall -->
+            <div class="input-group">
+              <div class="input-header">
+                <span class="input-label">🌧️ Rainfall</span>
+                <input type="number" step="0.5" id="rain_num" class="input-val-box" min="20" max="300" value="230.0" oninput="syncVal('rain', this.value)">
+              </div>
+              <div class="slider-row">
+                <input type="range" step="0.5" id="rain_range" min="20" max="300" value="230.0" oninput="syncVal('rain', this.value)">
+              </div>
+              <div class="range-limits"><span>20 mm</span><span>300 mm</span></div>
+            </div>
+
+            <button type="submit" class="predict-btn">
+              <span>✨ Run ML Recommendation</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Right Column: Prediction & Advisory Engine -->
+        <div class="card">
+          <div class="card-title">
+            <span>🎯 Optimal Crop Recommendation</span>
+            <span id="pred-status" style="font-size: 12px; color: var(--primary);">Real-time Active</span>
+          </div>
+
+          <!-- Hero Card -->
+          <div class="hero-recommendation">
+            <div class="crop-avatar" id="hero-icon">🌾</div>
+            <div class="hero-info">
+              <div class="hero-top">
+                <span class="hero-crop-name" id="hero-title">Rice</span>
+                <span class="confidence-badge" id="hero-conf">99.7% Match</span>
+              </div>
+              <div class="hero-category" id="hero-cat">Cereal / Staple Grain</div>
+              <div class="hero-desc" id="hero-desc">Thrives in warm, humid climates with heavy rainfall or abundant flood irrigation.</div>
+            </div>
+          </div>
+
+          <!-- Soil Health Diagnostics -->
+          <div class="card-title" style="font-size: 15px; margin-bottom: 12px;">
+            <span>🩺 Soil Nutrient Health Diagnostics</span>
+          </div>
+          <div class="soil-grid">
+            <div class="soil-card">
+              <div class="soil-card-header">
+                <span class="soil-title">Nitrogen Status</span>
+                <span class="soil-badge" id="badge-n" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Optimal</span>
+              </div>
+              <div class="soil-tip" id="tip-n">Nitrogen is in a balanced, productive range.</div>
+            </div>
+
+            <div class="soil-card">
+              <div class="soil-card-header">
+                <span class="soil-title">Phosphorus Status</span>
+                <span class="soil-badge" id="badge-p" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Optimal</span>
+              </div>
+              <div class="soil-tip" id="tip-p">Phosphorus level is ideal for root development.</div>
+            </div>
+
+            <div class="soil-card">
+              <div class="soil-card-header">
+                <span class="soil-title">Potassium Status</span>
+                <span class="soil-badge" id="badge-k" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Optimal</span>
+              </div>
+              <div class="soil-tip" id="tip-k">Potassium level supports stress resilience.</div>
+            </div>
+
+            <div class="soil-card">
+              <div class="soil-card-header">
+                <span class="soil-title">Soil pH Status</span>
+                <span class="soil-badge" id="badge-ph" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Neutral</span>
+              </div>
+              <div class="soil-tip" id="tip-ph">Neutral pH offers peak nutrient bioavailability.</div>
+            </div>
+          </div>
+
+          <!-- Agronomic Tips -->
+          <div class="card-title" style="font-size: 15px; margin-bottom: 12px;">
+            <span>📋 Field Management & Care Guide</span>
+          </div>
+          <div class="care-grid">
+            <div class="care-box">
+              <div class="care-title">💧 Irrigation Needs</div>
+              <div class="care-desc" id="care-water">High (Standing water required during early growth)</div>
+            </div>
+            <div class="care-box">
+              <div class="care-title">🧱 Recommended Soil Type</div>
+              <div class="care-desc" id="care-soil">Clayey or heavy loamy soil with high moisture retention</div>
+            </div>
+            <div class="care-box">
+              <div class="care-title">🧪 Fertilizer Protocol</div>
+              <div class="care-desc" id="care-fert">Apply Nitrogen in 3 split doses: basal, tillering, and panicle initiation.</div>
+            </div>
+            <div class="care-box">
+              <div class="care-title">☀️ Ideal Growing Season</div>
+              <div class="care-desc" id="care-season">Kharif (Monsoon / Summer)</div>
+            </div>
+          </div>
+
+          <!-- Runner Up Crops -->
+          <div class="card-title" style="font-size: 15px; margin-bottom: 8px;">
+            <span>📊 Alternative Compatible Crops</span>
+          </div>
+          <div class="runners-list" id="runners-container">
+            <!-- Populated by JS -->
+          </div>
+
+          <div style="margin-top: 16px;">
+            <a id="download-report-btn" href="#" target="_blank" class="report-link-btn">
+              <span>📄 View Official Advisory Report</span>
+            </a>
           </div>
         </div>
+      </div>
 
-        <div style="font-size: 13px; color: #d1d5db; margin-bottom: 10px;" id="exp_desc"></div>
-
-        <div class="crop-params-row" id="exp_params_row">
-          <!-- Populated by JS -->
+      <!-- History Card -->
+      <div class="history-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <span style="font-size: 16px; font-weight: 700;">📜 Field Analysis History</span>
+          <button class="clear-btn" onclick="clearHistoryLog()">Clear History</button>
         </div>
-
-        <div id="exp_gaps_box" style="font-size: 12px; color: #f59e0b; margin-top: 6px;"></div>
+        <div style="overflow-x: auto;">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Location</th>
+                <th>N-P-K</th>
+                <th>Temp / Hum / Rain</th>
+                <th>Soil pH</th>
+                <th>Recommended Crop</th>
+                <th>Confidence</th>
+                <th>Report</th>
+              </tr>
+            </thead>
+            <tbody id="history-tbody">
+              <tr><td colspan="8" style="text-align: center; color: var(--text-muted);">No records yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
-    <!-- Presets Toolbar -->
-    <div class="presets-bar">
-      <div class="presets-label">⚡ Quick Agricultural Field Presets:</div>
-      <div class="presets-list">
-        {% for key, preset in presets.items() %}
-          <button class="preset-btn" onclick="applyPreset('{{ key }}')">
-            {{ preset.title }}
-          </button>
-        {% endfor %}
+    <!-- ========================================================================= -->
+    <!-- TAB 2: LIVE MANDI & VEGETABLE RATES -->
+    <!-- ========================================================================= -->
+    <div id="tab-market" class="tab-section">
+      <div class="card">
+        <div class="card-title">
+          <span>📈 Daily APMC Mandi Rates & Market Benchmarks</span>
+          <span style="font-size: 12px; color: var(--primary);">Live Indian Mandi Prices</span>
+        </div>
+
+        <div class="mandi-controls">
+          <div class="mandi-filters">
+            <button class="filter-btn active" onclick="filterMandiCategory('All', this)">All Commodities</button>
+            <button class="filter-btn" onclick="filterMandiCategory('Vegetables', this)">🥬 Vegetables</button>
+            <button class="filter-btn" onclick="filterMandiCategory('Cereals & Grains', this)">🌾 Cereals & Grains</button>
+            <button class="filter-btn" onclick="filterMandiCategory('Pulses', this)">🫘 Pulses (Dals)</button>
+            <button class="filter-btn" onclick="filterMandiCategory('Cash Crops', this)">☁️ Commercial & Oilseeds</button>
+          </div>
+          <div style="min-width: 260px;">
+            <input type="text" id="mandi_search_input" class="city-input" placeholder="Search commodity (e.g. Tomato, Cotton, Wheat...)" oninput="filterMandiSearch(this.value)">
+          </div>
+        </div>
+
+        <div class="mandi-grid" id="mandi-grid-container">
+          <!-- Populated by JS -->
+        </div>
       </div>
     </div>
 
-    <!-- Main Grid -->
-    <div class="dashboard-grid">
-      <!-- Left Column: Soil & Climate Controls -->
+    <!-- ========================================================================= -->
+    <!-- TAB 3: NEARBY FERTILIZER & AGRI SHOPS -->
+    <!-- ========================================================================= -->
+    <div id="tab-shops" class="tab-section">
       <div class="card">
         <div class="card-title">
-          <span>🧪 Field Soil & Climate Parameters</span>
-          <span style="font-size: 12px; font-weight: normal; color: var(--text-muted);">Adjust or drag sliders</span>
+          <span>🏪 Certified Fertilizer, Seed & Agricultural Input Dealers</span>
+          <span style="font-size: 12px; color: var(--accent);">Near <strong id="shops-loc-display">Your Location</strong></span>
         </div>
 
-        <form id="agri-form" onsubmit="event.preventDefault(); triggerPrediction();">
-          <!-- Nitrogen -->
-          <div class="input-group">
-            <div class="input-header">
-              <span class="input-label">🌱 Nitrogen (N)</span>
-              <input type="number" id="n_num" class="input-val-box" min="0" max="140" value="85" oninput="syncVal('n', this.value)">
-            </div>
-            <div class="slider-row">
-              <input type="range" id="n_range" min="0" max="140" value="85" oninput="syncVal('n', this.value)">
-            </div>
-            <div class="range-limits"><span>0 kg/ha</span><span>140 kg/ha</span></div>
-          </div>
-
-          <!-- Phosphorus -->
-          <div class="input-group">
-            <div class="input-header">
-              <span class="input-label">🪨 Phosphorus (P)</span>
-              <input type="number" id="p_num" class="input-val-box" min="5" max="145" value="45" oninput="syncVal('p', this.value)">
-            </div>
-            <div class="slider-row">
-              <input type="range" id="p_range" min="5" max="145" value="45" oninput="syncVal('p', this.value)">
-            </div>
-            <div class="range-limits"><span>5 kg/ha</span><span>145 kg/ha</span></div>
-          </div>
-
-          <!-- Potassium -->
-          <div class="input-group">
-            <div class="input-header">
-              <span class="input-label">⚡ Potassium (K)</span>
-              <input type="number" id="k_num" class="input-val-box" min="5" max="205" value="40" oninput="syncVal('k', this.value)">
-            </div>
-            <div class="slider-row">
-              <input type="range" id="k_range" min="5" max="205" value="40" oninput="syncVal('k', this.value)">
-            </div>
-            <div class="range-limits"><span>5 kg/ha</span><span>205 kg/ha</span></div>
-          </div>
-
-          <!-- Temperature -->
-          <div class="input-group">
-            <div class="input-header">
-              <span class="input-label">🌡️ Temperature</span>
-              <input type="number" step="0.1" id="temp_num" class="input-val-box" min="8" max="45" value="24.5" oninput="syncVal('temp', this.value)">
-            </div>
-            <div class="slider-row">
-              <input type="range" step="0.1" id="temp_range" min="8" max="45" value="24.5" oninput="syncVal('temp', this.value)">
-            </div>
-            <div class="range-limits"><span>8 °C</span><span>45 °C</span></div>
-          </div>
-
-          <!-- Humidity -->
-          <div class="input-group">
-            <div class="input-header">
-              <span class="input-label">💧 Relative Humidity</span>
-              <input type="number" step="0.1" id="hum_num" class="input-val-box" min="10" max="100" value="82.0" oninput="syncVal('hum', this.value)">
-            </div>
-            <div class="slider-row">
-              <input type="range" step="0.1" id="hum_range" min="10" max="100" value="82.0" oninput="syncVal('hum', this.value)">
-            </div>
-            <div class="range-limits"><span>10 %</span><span>100 %</span></div>
-          </div>
-
-          <!-- Soil pH -->
-          <div class="input-group">
-            <div class="input-header">
-              <span class="input-label">⚖️ Soil pH Level</span>
-              <input type="number" step="0.1" id="ph_num" class="input-val-box" min="3.5" max="10.0" value="6.5" oninput="syncVal('ph', this.value)">
-            </div>
-            <div class="slider-row">
-              <input type="range" step="0.1" id="ph_range" min="3.5" max="10.0" value="6.5" oninput="syncVal('ph', this.value)">
-            </div>
-            <div class="range-limits"><span>3.5 (Acidic)</span><span>7.0</span><span>10.0 (Alkaline)</span></div>
-          </div>
-
-          <!-- Rainfall -->
-          <div class="input-group">
-            <div class="input-header">
-              <span class="input-label">🌧️ Rainfall</span>
-              <input type="number" step="0.5" id="rain_num" class="input-val-box" min="20" max="300" value="230.0" oninput="syncVal('rain', this.value)">
-            </div>
-            <div class="slider-row">
-              <input type="range" step="0.5" id="rain_range" min="20" max="300" value="230.0" oninput="syncVal('rain', this.value)">
-            </div>
-            <div class="range-limits"><span>20 mm</span><span>300 mm</span></div>
-          </div>
-
-          <button type="submit" class="predict-btn">
-            <span>✨ Run ML Recommendation</span>
-          </button>
-        </form>
-      </div>
-
-      <!-- Right Column: Prediction & Advisory Engine -->
-      <div class="card">
-        <div class="card-title">
-          <span>🎯 Optimal Crop Recommendation</span>
-          <span id="pred-status" style="font-size: 12px; color: var(--primary);">Real-time Active</span>
-        </div>
-
-        <!-- Hero Card -->
-        <div class="hero-recommendation">
-          <div class="crop-avatar" id="hero-icon">🌾</div>
-          <div class="hero-info">
-            <div class="hero-top">
-              <span class="hero-crop-name" id="hero-title">Rice</span>
-              <span class="confidence-badge" id="hero-conf">99.7% Match</span>
-            </div>
-            <div class="hero-category" id="hero-cat">Cereal / Staple Grain</div>
-            <div class="hero-desc" id="hero-desc">Thrives in warm, humid climates with heavy rainfall or abundant flood irrigation.</div>
-          </div>
-        </div>
-
-        <!-- Soil Health Diagnostics -->
-        <div class="card-title" style="font-size: 15px; margin-bottom: 12px;">
-          <span>🩺 Soil Nutrient Health Diagnostics</span>
-        </div>
-        <div class="soil-grid">
-          <div class="soil-card">
-            <div class="soil-card-header">
-              <span class="soil-title">Nitrogen Status</span>
-              <span class="soil-badge" id="badge-n" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Optimal</span>
-            </div>
-            <div class="soil-tip" id="tip-n">Nitrogen is in a balanced, productive range.</div>
-          </div>
-
-          <div class="soil-card">
-            <div class="soil-card-header">
-              <span class="soil-title">Phosphorus Status</span>
-              <span class="soil-badge" id="badge-p" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Optimal</span>
-            </div>
-            <div class="soil-tip" id="tip-p">Phosphorus level is ideal for root development.</div>
-          </div>
-
-          <div class="soil-card">
-            <div class="soil-card-header">
-              <span class="soil-title">Potassium Status</span>
-              <span class="soil-badge" id="badge-k" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Optimal</span>
-            </div>
-            <div class="soil-tip" id="tip-k">Potassium level supports stress resilience.</div>
-          </div>
-
-          <div class="soil-card">
-            <div class="soil-card-header">
-              <span class="soil-title">Soil pH Status</span>
-              <span class="soil-badge" id="badge-ph" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">Neutral</span>
-            </div>
-            <div class="soil-tip" id="tip-ph">Neutral pH offers peak nutrient bioavailability.</div>
-          </div>
-        </div>
-
-        <!-- Agronomic Tips -->
-        <div class="card-title" style="font-size: 15px; margin-bottom: 12px;">
-          <span>📋 Field Management & Care Guide</span>
-        </div>
-        <div class="care-grid">
-          <div class="care-box">
-            <div class="care-title">💧 Irrigation Needs</div>
-            <div class="care-desc" id="care-water">High (Standing water required during early growth)</div>
-          </div>
-          <div class="care-box">
-            <div class="care-title">🧱 Recommended Soil Type</div>
-            <div class="care-desc" id="care-soil">Clayey or heavy loamy soil with high moisture retention</div>
-          </div>
-          <div class="care-box">
-            <div class="care-title">🧪 Fertilizer Protocol</div>
-            <div class="care-desc" id="care-fert">Apply Nitrogen in 3 split doses: basal, tillering, and panicle initiation.</div>
-          </div>
-          <div class="care-box">
-            <div class="care-title">☀️ Ideal Growing Season</div>
-            <div class="care-desc" id="care-season">Kharif (Monsoon / Summer)</div>
-          </div>
-        </div>
-
-        <!-- Runner Up Crops -->
-        <div class="card-title" style="font-size: 15px; margin-bottom: 8px;">
-          <span>📊 Alternative Compatible Crops</span>
-        </div>
-        <div class="runners-list" id="runners-container">
-          <!-- Populated by JS -->
-        </div>
-
-        <div style="margin-top: 16px;">
-          <a id="download-report-btn" href="#" target="_blank" class="report-link-btn">
-            <span>📄 View Official Advisory Report</span>
+        <div style="display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
+          <a id="btn-maps-fert" href="#" target="_blank" class="map-dir-btn" style="background: linear-gradient(135deg, #10b981, #059669);">
+            <span>📍 Open All Fertilizer Shops in Google Maps</span>
+          </a>
+          <a id="btn-maps-seeds" href="#" target="_blank" class="map-dir-btn" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">
+            <span>📍 Open Seed & Pesticide Stores in Google Maps</span>
           </a>
         </div>
+
+        <div class="shops-grid" id="shops-grid-container">
+          <!-- Populated by JS -->
+        </div>
       </div>
     </div>
 
-    <!-- History Card -->
-    <div class="history-card">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-        <span style="font-size: 16px; font-weight: 700;">📜 Field Analysis History</span>
-        <button class="clear-btn" onclick="clearHistoryLog()">Clear History</button>
-      </div>
-      <div style="overflow-x: auto;">
-        <table class="history-table">
-          <thead>
-            <tr>
-              <th>Time</th>
-              <th>Location</th>
-              <th>N-P-K</th>
-              <th>Temp / Hum / Rain</th>
-              <th>Soil pH</th>
-              <th>Recommended Crop</th>
-              <th>Confidence</th>
-              <th>Report</th>
-            </tr>
-          </thead>
-          <tbody id="history-tbody">
-            <tr><td colspan="8" style="text-align: center; color: var(--text-muted);">No records yet.</td></tr>
-          </tbody>
-        </table>
+    <!-- ========================================================================= -->
+    <!-- TAB 4: FARMER TOOLKIT (CALCULATOR & PEST DOCTOR) -->
+    <!-- ========================================================================= -->
+    <div id="tab-toolkit" class="tab-section">
+      <div class="tools-grid">
+        <!-- Fertilizer Dosage Calculator -->
+        <div class="card">
+          <div class="card-title">
+            <span>🧮 Fertilizer Dosage & Bag Calculator</span>
+            <span style="font-size: 12px; color: var(--primary);">Exact Bags for Your Field</span>
+          </div>
+
+          <div class="calc-box">
+            <div class="calc-row">
+              <div style="flex: 1.5;">
+                <label style="font-size: 12px; color: #9ca3af; display: block; margin-bottom: 4px;">Select Crop</label>
+                <select id="calc_crop" class="crop-select">
+                  {% for k, c in fert_crops.items() %}
+                    <option value="{{ k }}">{{ c.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+
+              <div style="flex: 1;">
+                <label style="font-size: 12px; color: #9ca3af; display: block; margin-bottom: 4px;">Land Area</label>
+                <input type="number" id="calc_area" class="calc-input" value="1.0" step="0.5" min="0.1">
+              </div>
+
+              <div style="flex: 1;">
+                <label style="font-size: 12px; color: #9ca3af; display: block; margin-bottom: 4px;">Unit</label>
+                <select id="calc_unit" class="crop-select">
+                  <option value="acre" selected>Acres</option>
+                  <option value="hectare">Hectares</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="calc-btn" onclick="calculateFertilizerRequirement()">
+              ⚡ Calculate Required Fertilizer Bags
+            </button>
+
+            <!-- Results -->
+            <div id="fert_calc_results" style="display: none; margin-top: 16px;">
+              <div style="font-size: 13px; font-weight: 700; color: #34d399; margin-bottom: 6px;">
+                Recommended Commercial Fertilizer Bags:
+              </div>
+              <div class="calc-result-cards">
+                <div class="fert-bag-card">
+                  <div class="fert-bag-name">🌾 Urea</div>
+                  <div class="fert-bag-count" id="res_urea_bags">--</div>
+                  <div style="font-size: 11px; color: #e5e7eb;">Bags (45 kg)</div>
+                  <div class="fert-bag-timing" id="res_urea_timing">2 split doses</div>
+                </div>
+
+                <div class="fert-bag-card">
+                  <div class="fert-bag-name">🪨 DAP</div>
+                  <div class="fert-bag-count" id="res_dap_bags">--</div>
+                  <div style="font-size: 11px; color: #e5e7eb;">Bags (50 kg)</div>
+                  <div class="fert-bag-timing" id="res_dap_timing">100% Basal at sowing</div>
+                </div>
+
+                <div class="fert-bag-card">
+                  <div class="fert-bag-name">⚡ MOP (Potash)</div>
+                  <div class="fert-bag-count" id="res_mop_bags">--</div>
+                  <div style="font-size: 11px; color: #e5e7eb;">Bags (50 kg)</div>
+                  <div class="fert-bag-timing" id="res_mop_timing">Basal dose</div>
+                </div>
+              </div>
+              <div style="font-size: 12px; color: #cbd5e1; margin-top: 10px; line-height: 1.4;" id="res_fert_safety"></div>
+            </div>
+          </div>
+
+          <!-- Kisan Helplines -->
+          <div class="card-title" style="font-size: 15px; margin-top: 24px; margin-bottom: 8px;">
+            <span>📞 Kisan Emergency Helplines & Direct Support</span>
+          </div>
+          {% for h in helplines %}
+            <div class="helpline-box">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: 700; color: white;">{{ h.icon }} {{ h.service }}</span>
+                <span class="helpline-num">{{ h.phone }}</span>
+              </div>
+              <div style="font-size: 12px; color: #94a3b8; margin-top: 4px;">{{ h.type }}</div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <!-- Plant Doctor / Pest & Disease Identifier -->
+        <div class="card">
+          <div class="card-title">
+            <span>🩺 Crop Pest & Disease Diagnostic Doctor</span>
+            <span style="font-size: 12px; color: #f87171;">Symptoms & Remedies</span>
+          </div>
+
+          <div style="margin-bottom: 14px;">
+            <input type="text" id="disease_search_input" class="city-input" placeholder="Search symptom (e.g. Yellow leaves, Leaf curl, Blast, Wilt...)" oninput="filterDiseaseSearch(this.value)">
+          </div>
+
+          <div id="disease-list-container">
+            {% for d in diseases %}
+              <div class="pest-card" data-search="{{ d.symptom }} {{ d.diagnosis }} {{ d.crop_affected }}">
+                <div class="pest-header">
+                  <span class="pest-diag">{{ d.diagnosis }}</span>
+                  <span style="font-size: 11px; font-weight: 700; color: #f59e0b;">{{ d.severity }} Risk</span>
+                </div>
+                <div style="font-size: 11.5px; color: #9ca3af; margin-bottom: 4px;"><strong>Crops:</strong> {{ d.crop_affected }}</div>
+                <div class="pest-sym"><strong>Symptom:</strong> {{ d.symptom }}</div>
+                <div class="remedy-box remedy-organic">
+                  <strong>🌱 Organic Control:</strong> {{ d.organic_remedy }}
+                </div>
+                <div class="remedy-box remedy-chem">
+                  <strong>🧪 Chemical Remedy:</strong> {{ d.chemical_remedy }}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Footer -->
     <footer>
-      AgroAI Machine Learning Project • Built with Python, Flask, Gaussian Naive Bayes & K-NN algorithms.
+      AgroAI Agricultural Decision Platform • Crop Recommendation, Live Weather, Mandi Prices, Nearby Fertilizer Shops & Farmer Solutions.
     </footer>
+  </div>
+
+  <!-- Custom Error Modal ("Error of place") -->
+  <div id="custom-error-modal" class="custom-modal-overlay" onclick="if(event.target===this) closeCustomModal();">
+    <div class="custom-modal-box">
+      <div class="custom-modal-header">
+        <div class="custom-modal-title">
+          <span>⚠️</span>
+          <span id="modal-title-text">Error of place</span>
+        </div>
+        <button class="custom-modal-close-x" onclick="closeCustomModal()" title="Close">&times;</button>
+      </div>
+      <div class="custom-modal-body" id="modal-body-text">
+        Could not find location.
+      </div>
+      <div class="custom-modal-footer">
+        <button id="modal-ok-btn" class="custom-modal-ok-btn" onclick="closeCustomModal()">OK</button>
+      </div>
+    </div>
   </div>
 
   <script>
     const PRESETS = {{ presets | tojson }};
     const CROP_CATALOG = {{ crop_catalog | tojson }};
+    const MARKET_RATES = {{ market_rates | tojson }};
     let currentWeatherState = {
       location: "Bengaluru, India",
+      latitude: 12.97,
+      longitude: 77.59,
       temperature: 25.6,
       humidity: 45.0,
-      rainfall: 65.0
+      rainfall: 65.0,
+      forecast: []
     };
     let latestRecordId = 1;
     let selectedExplorerCrop = null;
+    let activeMandiCategory = 'All';
+
+    // TAB SWITCHING
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-tab-btn').forEach(el => el.classList.remove('active'));
+      
+      const targetSec = document.getElementById(`tab-${tabId}`);
+      if (targetSec) targetSec.classList.add('active');
+
+      const btns = document.querySelectorAll('.nav-tab-btn');
+      btns.forEach(b => {
+        if (b.getAttribute('onclick').includes(tabId)) {
+          b.classList.add('active');
+        }
+      });
+
+      if (tabId === 'market') renderMarketRates();
+      if (tabId === 'shops') loadNearbyShops();
+      if (tabId === 'toolkit') calculateFertilizerRequirement();
+    }
 
     function syncVal(key, val) {
       document.getElementById(`${key}_range`).value = val;
       document.getElementById(`${key}_num`).value = val;
-      // If a crop is currently open in explorer, update its live compatibility
       if (selectedExplorerCrop) {
         checkCropCompatibility(selectedExplorerCrop.id);
       }
@@ -1410,12 +2161,13 @@
         const data = await resp.json();
         if (data.success) {
           updateWeatherUI(data);
+          loadNearbyShops();
         } else {
           showErrorModal(data.error || `Could not find location for '${city}'.`, 'Error of place');
         }
       } catch (err) {
         console.error('Weather fetch error:', err);
-        showErrorModal('Unable to connect to weather service. Please check your connection.', 'Error of place');
+        showErrorModal('Unable to connect to weather service. Please check connection.', 'Error of place');
       }
     }
 
@@ -1432,6 +2184,7 @@
           const data = await resp.json();
           if (data.success) {
             updateWeatherUI(data);
+            loadNearbyShops();
           } else {
             showErrorModal("Could not determine weather for current GPS coordinates.", "Error of place");
           }
@@ -1447,9 +2200,12 @@
     function updateWeatherUI(data) {
       currentWeatherState = {
         location: data.location || data.city || "Current Location",
+        latitude: data.latitude,
+        longitude: data.longitude,
         temperature: data.temperature,
         humidity: data.humidity,
-        rainfall: data.estimated_rainfall
+        rainfall: data.estimated_rainfall,
+        forecast: data.forecast || []
       };
 
       document.getElementById('w_icon').innerText = data.icon || "☀️";
@@ -1458,6 +2214,35 @@
       document.getElementById('w_temp').innerText = `🌡️ ${data.temperature}°C`;
       document.getElementById('w_hum').innerText = `💧 ${data.humidity}%`;
       document.getElementById('w_rain').innerText = `🌧️ ${data.estimated_rainfall} mm`;
+      document.getElementById('fc-loc-name').innerText = currentWeatherState.location;
+
+      renderForecastGrid(data.forecast || []);
+    }
+
+    function renderForecastGrid(forecastList) {
+      const container = document.getElementById('forecast-grid-container');
+      if (!forecastList || forecastList.length === 0) {
+        container.innerHTML = '<div style="color: #9ca3af; grid-column: 1/-1;">Forecast unavailable.</div>';
+        return;
+      }
+      container.innerHTML = '';
+      forecastList.forEach(f => {
+        const div = document.createElement('div');
+        div.className = 'forecast-card';
+        div.innerHTML = `
+          <div class="fc-date">${f.date}</div>
+          <div class="fc-icon">${f.icon}</div>
+          <div class="fc-temp">${f.max_temp}° / ${f.min_temp}°</div>
+          <div class="fc-rain">🌧️ ${f.rain_mm} mm</div>
+          <div class="fc-advice">${f.farming_advice}</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function toggleForecastDrawer() {
+      const drawer = document.getElementById('forecast-drawer');
+      drawer.style.display = (drawer.style.display === 'block') ? 'none' : 'block';
     }
 
     function applyLiveWeather() {
@@ -1467,6 +2252,7 @@
       triggerPrediction();
     }
 
+    // Prediction Engine
     async function triggerPrediction() {
       const payload = {
         n: parseFloat(document.getElementById('n_num').value),
@@ -1546,6 +2332,178 @@
       tip.innerText = healthObj.tip;
     }
 
+    // MANDI RATES LOGIC
+    function renderMarketRates(filterCat = null, searchVal = null) {
+      const cat = filterCat || activeMandiCategory;
+      const search = searchVal !== null ? searchVal.toLowerCase() : document.getElementById('mandi_search_input').value.toLowerCase();
+      
+      let filtered = MARKET_RATES;
+      if (cat !== 'All') {
+        filtered = filtered.filter(item => item.category.toLowerCase() === cat.toLowerCase());
+      }
+      if (search) {
+        filtered = filtered.filter(item => 
+          item.commodity.toLowerCase().includes(search) || 
+          item.primary_mandi.toLowerCase().includes(search)
+        );
+      }
+
+      const container = document.getElementById('mandi-grid-container');
+      container.innerHTML = '';
+      if (filtered.length === 0) {
+        container.innerHTML = '<div style="color: #9ca3af; padding: 20px;">No commodities match your search query.</div>';
+        return;
+      }
+
+      filtered.forEach(item => {
+        const trendClass = item.trend === 'rising' ? 'trend-rising' : (item.trend === 'falling' ? 'trend-falling' : 'trend-stable');
+        const trendIcon = item.trend === 'rising' ? '📈' : (item.trend === 'falling' ? '📉' : '⚖️');
+
+        const card = document.createElement('div');
+        card.className = 'mandi-card';
+        card.innerHTML = `
+          <div class="mandi-top">
+            <div class="mandi-name-wrap">
+              <span class="mandi-icon">${item.icon}</span>
+              <div>
+                <div class="mandi-comm-name">${item.commodity}</div>
+                <div class="mandi-cat">${item.category}</div>
+              </div>
+            </div>
+            <div class="trend-pill ${trendClass}">
+              ${trendIcon} ${item.change_pct}
+            </div>
+          </div>
+
+          <div class="mandi-price-box">
+            <div>
+              <span class="mandi-price-val">₹${item.modal_price.toLocaleString()}</span>
+              <span style="font-size: 11px; color: #9ca3af;"> / Qtl</span>
+            </div>
+            <div class="mandi-kg-val">≈ <strong>₹${item.price_per_kg}/kg</strong></div>
+          </div>
+
+          <div class="mandi-range-row">
+            <span>Range: ₹${item.min_price} - ₹${item.max_price}</span>
+            <span>${item.msp ? 'MSP: ₹' + item.msp : 'Market Driven'}</span>
+          </div>
+
+          <div class="mandi-hub">
+            📍 <strong>Key Mandis:</strong> ${item.primary_mandi}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterMandiCategory(cat, btn) {
+      activeMandiCategory = cat;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      renderMarketRates();
+    }
+
+    function filterMandiSearch(val) {
+      renderMarketRates(activeMandiCategory, val);
+    }
+
+    // SHOPS DISCOVERY LOGIC
+    async function loadNearbyShops() {
+      const loc = currentWeatherState.location || "Your Area";
+      document.getElementById('shops-loc-display').innerText = loc;
+      
+      const cityOnly = loc.split(',')[0].trim();
+      document.getElementById('btn-maps-fert').href = `https://www.google.com/maps/search/${encodeURIComponent(cityOnly + " fertilizer shops")}`;
+      document.getElementById('btn-maps-seeds').href = `https://www.google.com/maps/search/${encodeURIComponent(cityOnly + " agri seeds pesticide stores")}`;
+
+      try {
+        const resp = await fetch(`/api/shops?location=${encodeURIComponent(loc)}&lat=${currentWeatherState.latitude}&lon=${currentWeatherState.longitude}`);
+        const data = await resp.json();
+        if (data.status === 'success') {
+          renderShops(data.data.shops);
+        }
+      } catch (e) {
+        console.error('Shops fetch error:', e);
+      }
+    }
+
+    function renderShops(shopsList) {
+      const container = document.getElementById('shops-grid-container');
+      container.innerHTML = '';
+      if (!shopsList || shopsList.length === 0) {
+        container.innerHTML = '<div style="color: #9ca3af;">No shops listed.</div>';
+        return;
+      }
+
+      shopsList.forEach(s => {
+        const div = document.createElement('div');
+        div.className = 'shop-card';
+        div.innerHTML = `
+          <div>
+            <div class="shop-header">
+              <span class="shop-icon">${s.icon}</span>
+              <div>
+                <div class="shop-name">${s.name}</div>
+                <div class="shop-badge">${s.category} • ⭐ ${s.rating}</div>
+              </div>
+            </div>
+            <div class="shop-details">
+              <div>📍 ${s.distance} • ${s.address}</div>
+              <div>📞 <strong>Phone:</strong> <a href="tel:${s.phone}" style="color: #60a5fa; text-decoration: none;">${s.phone}</a></div>
+              <div>🕒 <strong>Hours:</strong> ${s.timing}</div>
+            </div>
+            <div class="shop-prods">
+              ${s.products.map(p => `<span class="prod-tag">${p}</span>`).join('')}
+            </div>
+          </div>
+          <a href="${s.directions_url}" target="_blank" class="map-dir-btn">
+            🧭 Get Directions on Google Maps
+          </a>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // FERTILIZER CALCULATOR LOGIC
+    async function calculateFertilizerRequirement() {
+      const crop = document.getElementById('calc_crop').value;
+      const area = parseFloat(document.getElementById('calc_area').value) || 1.0;
+      const unit = document.getElementById('calc_unit').value;
+
+      try {
+        const resp = await fetch('/api/fertilizer-calc', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ crop: crop, land_size: area, unit: unit })
+        });
+        const data = await resp.json();
+        if (data.status === 'success') {
+          const c = data.calc;
+          document.getElementById('fert_calc_results').style.display = 'block';
+          document.getElementById('res_urea_bags').innerText = `${c.bags_required.urea.bags} Bags`;
+          document.getElementById('res_urea_timing').innerText = c.bags_required.urea.timing;
+          document.getElementById('res_dap_bags').innerText = `${c.bags_required.dap.bags} Bags`;
+          document.getElementById('res_dap_timing').innerText = c.bags_required.dap.timing;
+          document.getElementById('res_mop_bags').innerText = `${c.bags_required.mop.bags} Bags`;
+          document.getElementById('res_mop_timing').innerText = c.bags_required.mop.timing;
+          document.getElementById('res_fert_safety').innerText = `💡 ${c.safety_tip}`;
+        }
+      } catch (e) {
+        console.error('Fertilizer calc error:', e);
+      }
+    }
+
+    // PLANT DOCTOR SEARCH
+    function filterDiseaseSearch(query) {
+      const q = query.trim().toLowerCase();
+      const cards = document.querySelectorAll('.pest-card');
+      cards.forEach(c => {
+        const txt = c.getAttribute('data-search').toLowerCase();
+        c.style.display = (txt.includes(q)) ? 'block' : 'none';
+      });
+    }
+
+    // HISTORY
     async function loadHistory() {
       try {
         const resp = await fetch('/api/history');
@@ -1578,7 +2536,7 @@
       document.getElementById('history-tbody').innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted);">History cleared.</td></tr>';
     }
 
-    // Custom Error of place Modal Logic
+    // MODAL
     function showErrorModal(message, title = "Error of place") {
       document.getElementById('modal-title-text').innerText = title;
       document.getElementById('modal-body-text').innerText = message;
@@ -1593,34 +2551,14 @@
     }
 
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeCustomModal();
-      }
+      if (e.key === 'Escape') closeCustomModal();
     });
 
     window.addEventListener('DOMContentLoaded', () => {
       triggerPrediction();
       loadHistory();
+      renderMarketRates();
     });
   </script>
-
-  <!-- Custom Error Modal ("Error of place") -->
-  <div id="custom-error-modal" class="custom-modal-overlay" onclick="if(event.target===this) closeCustomModal();">
-    <div class="custom-modal-box">
-      <div class="custom-modal-header">
-        <div class="custom-modal-title">
-          <span>⚠️</span>
-          <span id="modal-title-text">Error of place</span>
-        </div>
-        <button class="custom-modal-close-x" onclick="closeCustomModal()" title="Close">&times;</button>
-      </div>
-      <div class="custom-modal-body" id="modal-body-text">
-        Could not find location.
-      </div>
-      <div class="custom-modal-footer">
-        <button id="modal-ok-btn" class="custom-modal-ok-btn" onclick="closeCustomModal()">OK</button>
-      </div>
-    </div>
-  </div>
 </body>
 </html>
