@@ -1429,6 +1429,321 @@
       transform: translateY(-1px);
     }
 
+    /* Seasonal Explorer & Profit Estimator Styling */
+    .seasons-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .seasons-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .season-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .season-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(16, 185, 129, 0.4);
+    }
+
+    .season-badge-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .season-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .season-meta {
+      font-size: 12.5px;
+      color: #cbd5e1;
+      margin-bottom: 12px;
+      line-height: 1.45;
+    }
+
+    .season-crops-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .sc-chip {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      color: #f3f4f6;
+    }
+
+    /* Profit Estimator Results */
+    .profit-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .profit-summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .profit-stat-card {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .profit-stat-card.highlight {
+      border-color: rgba(16, 185, 129, 0.5);
+      background: linear-gradient(145deg, rgba(16, 185, 129, 0.1), rgba(6, 78, 59, 0.25));
+    }
+
+    .profit-num {
+      font-size: 22px;
+      font-weight: 800;
+      color: #34d399;
+      font-family: 'JetBrains Mono', monospace;
+      margin: 4px 0;
+    }
+
+    .profit-label {
+      font-size: 11.5px;
+      color: #9ca3af;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Floating AI Chatbot */
+    .ai-chat-launcher {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: linear-gradient(135deg, #10b981, #047857);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4), 0 0 15px rgba(16, 185, 129, 0.2);
+      z-index: 999;
+      transition: all 0.2s ease;
+    }
+
+    .ai-chat-launcher:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.5);
+    }
+
+    .ai-chat-window {
+      position: fixed;
+      bottom: 84px;
+      right: 24px;
+      width: 380px;
+      max-width: 92vw;
+      height: 520px;
+      max-height: 80vh;
+      background: #111827;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 18px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(16, 185, 129, 0.15);
+      display: flex;
+      flex-direction: column;
+      z-index: 1000;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(15px) scale(0.96);
+      transition: all 0.2s ease;
+    }
+
+    .ai-chat-window.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    .ai-chat-header {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 78, 59, 0.35));
+      border-bottom: 1px solid var(--card-border);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ai-chat-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ai-chat-avatar {
+      width: 34px;
+      height: 34px;
+      background: #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .ai-chat-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .ai-chat-status {
+      font-size: 11px;
+      color: #34d399;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .ai-chat-close {
+      background: transparent;
+      border: none;
+      color: #9ca3af;
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .ai-chat-close:hover {
+      color: white;
+    }
+
+    .ai-chat-messages {
+      flex: 1;
+      padding: 14px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13px;
+    }
+
+    .chat-bubble {
+      padding: 10px 14px;
+      border-radius: 12px;
+      max-width: 85%;
+      line-height: 1.45;
+    }
+
+    .chat-bubble.bot {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: #e5e7eb;
+      align-self: flex-start;
+      border-bottom-left-radius: 3px;
+    }
+
+    .chat-bubble.user {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 3px;
+    }
+
+    .chat-quick-chips {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 6px 12px;
+      background: rgba(0, 0, 0, 0.2);
+      border-top: 1px solid var(--card-border);
+    }
+
+    .chat-chip {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: #93c5fd;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .chat-chip:hover {
+      background: rgba(59, 130, 246, 0.2);
+      color: white;
+    }
+
+    .ai-chat-input-row {
+      display: flex;
+      padding: 10px 12px;
+      background: #0f172a;
+      border-top: 1px solid var(--card-border);
+      gap: 8px;
+    }
+
+    .ai-chat-input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: white;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .ai-chat-input:focus {
+      border-color: var(--primary);
+    }
+
+    .ai-chat-send {
+      background: var(--primary);
+      color: #064e3b;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
     /* Footer */
     footer {
       margin-top: 36px;
@@ -1478,6 +1793,9 @@
       </button>
       <button class="nav-tab-btn" onclick="switchTab('toolkit')">
         🧮 Fertilizer Calculator & Plant Doctor
+      </button>
+      <button class="nav-tab-btn" onclick="switchTab('seasons')">
+        🗓️ Seasonal Crops & Profit Estimator
       </button>
     </div>
 
@@ -1986,10 +2304,176 @@
       </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-      AgroAI Agricultural Decision Platform • Crop Recommendation, Live Weather, Mandi Prices, Nearby Fertilizer Shops & Farmer Solutions.
-    </footer>
+    <!-- ========================================================================= -->
+    <!-- TAB 5: SEASONAL CROPS & FARM PROFIT ESTIMATOR -->
+    <!-- ========================================================================= -->
+    <div id="tab-seasons" class="tab-section">
+      <!-- Seasonal Crop Calendars -->
+      <div class="card" style="margin-bottom: 24px;">
+        <div class="card-title">
+          <span>🗓️ India Agricultural Crop Seasons & Cropping Calendar</span>
+          <span style="font-size: 12px; color: var(--primary);">Kharif • Rabi • Zaid</span>
+        </div>
+        <p style="font-size: 13px; color: #94a3b8; margin-top: -8px; margin-bottom: 18px;">
+          Select your cropping season to understand sowing windows, climate requirements, and high-yielding recommended varieties.
+        </p>
+
+        <div class="seasons-grid">
+          {% for season_key, s in seasons.items() %}
+            <div class="season-card">
+              <div>
+                <span class="season-badge-tag">{{ s.icon }} {{ s.months }}</span>
+                <div class="season-title">{{ s.title }}</div>
+                <div class="season-meta">
+                  <div><strong>🌧️ Monsoon / Climate:</strong> {{ s.climate }}</div>
+                  <div style="margin-top: 4px;"><strong>🌱 Sowing:</strong> {{ s.sowing }}</div>
+                  <div style="margin-top: 4px;"><strong>🌾 Harvesting:</strong> {{ s.harvesting }}</div>
+                </div>
+                <div style="font-size: 12px; font-weight: 700; color: #93c5fd; margin-top: 8px;">Key Crops:</div>
+                <div class="season-crops-list">
+                  {% for c in s.crops %}
+                    <span class="sc-chip">{{ c }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+              <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--card-border); font-size: 11.5px; color: #a7f3d0;">
+                💡 <strong>Tip:</strong> {{ s.tip }}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Land Area & Farm Profit / Yield Estimator -->
+      <div class="card">
+        <div class="card-title">
+          <span>💰 Land Area, Yield & Net Farm Profit Estimator</span>
+          <span style="font-size: 12px; color: #34d399;">Comprehensive Farm Budgeting</span>
+        </div>
+        <p style="font-size: 13px; color: #94a3b8; margin-top: -8px; margin-bottom: 20px;">
+          Calculate precise seed quantities, plant spacing, total cultivation investment, expected harvest yield, gross revenue, and estimated net profit for your field.
+        </p>
+
+        <div class="calc-box">
+          <div class="calc-row">
+            <div style="flex: 1.5;">
+              <label style="font-size: 12px; color: #9ca3af; display: block; margin-bottom: 4px;">Select Planned Crop</label>
+              <select id="budget_crop_select" class="crop-select" onchange="calculateProfitEstimate()">
+                {% for k, b in budget_crops.items() %}
+                  <option value="{{ k }}">{{ b.name }} ({{ b.duration_days }} days)</option>
+                {% endfor %}
+              </select>
+            </div>
+
+            <div style="flex: 1;">
+              <label style="font-size: 12px; color: #9ca3af; display: block; margin-bottom: 4px;">Land Area Size</label>
+              <input type="number" id="budget_land_size" class="calc-input" value="1.0" step="0.5" min="0.1" onchange="calculateProfitEstimate()" oninput="calculateProfitEstimate()">
+            </div>
+
+            <div style="flex: 1;">
+              <label style="font-size: 12px; color: #9ca3af; display: block; margin-bottom: 4px;">Land Unit</label>
+              <select id="budget_land_unit" class="crop-select" onchange="calculateProfitEstimate()">
+                <option value="acre" selected>Acres</option>
+                <option value="hectare">Hectares</option>
+              </select>
+            </div>
+          </div>
+
+          <button class="calc-btn" onclick="calculateProfitEstimate()" style="background: linear-gradient(135deg, #10b981, #059669); margin-top: 14px;">
+            💵 Calculate Farm Yield, Cost & Net Profit
+          </button>
+
+          <!-- Profit Breakdown Stat Cards -->
+          <div class="profit-summary-grid" id="profit_stat_cards">
+            <div class="profit-stat-card">
+              <div class="profit-label">🌾 Expected Yield</div>
+              <div class="profit-num" id="prof_yield">-- Qtl</div>
+              <div style="font-size: 11px; color: #cbd5e1;" id="prof_duration">-- Days</div>
+            </div>
+
+            <div class="profit-stat-card">
+              <div class="profit-label">📉 Cultivation Cost</div>
+              <div class="profit-num" style="color: #f87171;" id="prof_cost">₹ --</div>
+              <div style="font-size: 11px; color: #cbd5e1;">Seeds, labor, fert</div>
+            </div>
+
+            <div class="profit-stat-card">
+              <div class="profit-label">📈 Gross Revenue</div>
+              <div class="profit-num" style="color: #60a5fa;" id="prof_revenue">₹ --</div>
+              <div style="font-size: 11px; color: #cbd5e1;" id="prof_mandi_rate">@ ₹-- / Qtl</div>
+            </div>
+
+            <div class="profit-stat-card highlight">
+              <div class="profit-label">✨ Estimated Net Profit</div>
+              <div class="profit-num" style="color: #34d399;" id="prof_net_profit">₹ --</div>
+              <div style="font-size: 11px; font-weight: 700; color: #a7f3d0;" id="prof_roi">--% ROI</div>
+            </div>
+          </div>
+
+          <!-- Agronomic Specifications Box -->
+          <div style="margin-top: 18px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--card-border); border-radius: 12px; padding: 14px;">
+            <div style="font-size: 13px; font-weight: 700; color: #93c5fd; margin-bottom: 8px;">
+              🌱 Field Agronomy & Resource Specifications:
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 12.5px; color: #e2e8f0;">
+              <div>🌰 <strong>Seed Rate Required:</strong> <span id="prof_seed_rate">--</span></div>
+              <div>📐 <strong>Row & Plant Spacing:</strong> <span id="prof_spacing">--</span></div>
+              <div>💧 <strong>Water & Irrigation:</strong> <span id="prof_water">--</span></div>
+              <div>🗓️ <strong>Duration to Harvest:</strong> <span id="prof_duration_spec">--</span></div>
+            </div>
+            <div style="margin-top: 10px; font-size: 12px; color: #34d399; line-height: 1.4;" id="prof_profit_tip">
+              💡 Profit tip: Timely harvesting and direct APMC Mandi linkage maximizes net returns.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Kisan AI Chatbot Widget -->
+  <button id="ai-chat-launcher" class="ai-chat-launcher" onclick="toggleChatWindow()" title="Chat with Kisan AI Copilot">
+    <span>🤖</span>
+    <span>Kisan AI Copilot</span>
+  </button>
+
+  <div id="ai-chat-window" class="ai-chat-window">
+    <div class="ai-chat-header">
+      <div class="ai-chat-title-group">
+        <div class="ai-chat-avatar">🌾</div>
+        <div>
+          <div class="ai-chat-title">Kisan AI Copilot</div>
+          <div class="ai-chat-status">
+            <span>●</span> Online Agronomist
+          </div>
+        </div>
+      </div>
+      <button class="ai-chat-close" onclick="toggleChatWindow()" title="Close chat">&times;</button>
+    </div>
+
+    <div class="ai-chat-messages" id="chat-messages-container">
+      <div class="chat-bubble bot">
+        🙏 <strong>Namaste Farmer Brother!</strong> I am your <strong>Kisan AI Copilot</strong>.<br><br>
+        Ask me anything:
+        • Best seasonal crop for your land & climate<br>
+        • Exact Urea/DAP fertilizer doses<br>
+        • Pest & plant disease organic remedies<br>
+        • Live Mandi prices & PM-Kisan scheme guidance!
+      </div>
+    </div>
+
+    <!-- Quick Prompts Bar -->
+    <div class="chat-quick-chips">
+      <span class="chat-chip" onclick="useChatPrompt('What is the best crop for Kharif season?')">🌾 Kharif crops</span>
+      <span class="chat-chip" onclick="useChatPrompt('How many urea bags needed for 2 acres of wheat?')">🧪 Urea dose</span>
+      <span class="chat-chip" onclick="useChatPrompt('Tomato leaves curling yellow remedy')">🥬 Leaf curl cure</span>
+      <span class="chat-chip" onclick="useChatPrompt('What is the today market price of cotton and tomato?')">📈 Mandi rates</span>
+      <span class="chat-chip" onclick="useChatPrompt('How to make Jeevamrutha organic fertilizer?')">🌱 Jeevamrutha</span>
+    </div>
+
+    <div class="ai-chat-input-row">
+      <input type="text" id="chat-user-input" class="ai-chat-input" placeholder="Ask a question (e.g. best crop for black soil, pest cure...)" onkeypress="if(event.key==='Enter') sendChatMessage();">
+      <button class="ai-chat-send" onclick="sendChatMessage()">Send</button>
+    </div>
   </div>
 
   <!-- Custom Error Modal ("Error of place") -->
@@ -2046,6 +2530,7 @@
       if (tabId === 'market') renderMarketRates();
       if (tabId === 'shops') loadNearbyShops();
       if (tabId === 'toolkit') calculateFertilizerRequirement();
+      if (tabId === 'seasons') calculateProfitEstimate();
     }
 
     function syncVal(key, val) {
@@ -2536,6 +3021,112 @@
       document.getElementById('history-tbody').innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted);">History cleared.</td></tr>';
     }
 
+    // FARM AREA, YIELD & PROFIT ESTIMATOR LOGIC
+    async function calculateProfitEstimate() {
+      const cropSelect = document.getElementById('budget_crop_select');
+      if (!cropSelect) return;
+      const crop = cropSelect.value;
+      const landSize = parseFloat(document.getElementById('budget_land_size').value) || 1.0;
+      const unit = document.getElementById('budget_land_unit').value;
+
+      try {
+        const resp = await fetch('/api/profit-estimator', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ crop: crop, land_size: landSize, unit: unit })
+        });
+        const data = await resp.json();
+        if (data.status === 'success') {
+          const b = data.budget;
+          document.getElementById('prof_yield').innerText = `${b.expected_yield_quintals} Qtl`;
+          document.getElementById('prof_duration').innerText = `${b.duration_days} Days Growth`;
+          document.getElementById('prof_cost').innerText = `₹${b.cultivation_cost_inr.toLocaleString('en-IN')}`;
+          document.getElementById('prof_revenue').innerText = `₹${b.gross_revenue_inr.toLocaleString('en-IN')}`;
+          document.getElementById('prof_mandi_rate').innerText = `@ ₹${b.mandi_price_per_quintal.toLocaleString('en-IN')} / Qtl`;
+          
+          const profitEl = document.getElementById('prof_net_profit');
+          profitEl.innerText = `₹${b.estimated_net_profit_inr.toLocaleString('en-IN')}`;
+          profitEl.style.color = b.estimated_net_profit_inr >= 0 ? '#34d399' : '#f87171';
+          
+          document.getElementById('prof_roi').innerText = `${b.roi_percentage}% ROI (${b.season_name})`;
+          document.getElementById('prof_seed_rate').innerText = `${b.seed_rate_required} for ${landSize} ${unit}`;
+          document.getElementById('prof_spacing').innerText = b.spacing_cm;
+          document.getElementById('prof_water').innerText = b.water_requirement;
+          document.getElementById('prof_duration_spec').innerText = `${b.duration_days} days to harvest`;
+          document.getElementById('prof_profit_tip').innerText = `💡 Profit Advisory: ${b.profit_tip}`;
+        }
+      } catch (e) {
+        console.error('Profit estimation error:', e);
+      }
+    }
+
+    // AI CHATBOT COPILOT LOGIC
+    let isChatOpen = false;
+
+    function toggleChatWindow() {
+      isChatOpen = !isChatOpen;
+      const win = document.getElementById('ai-chat-window');
+      if (isChatOpen) {
+        win.classList.add('open');
+        document.getElementById('chat-user-input').focus();
+      } else {
+        win.classList.remove('open');
+      }
+    }
+
+    function useChatPrompt(text) {
+      if (!isChatOpen) toggleChatWindow();
+      const input = document.getElementById('chat-user-input');
+      input.value = text;
+      sendChatMessage();
+    }
+
+    async function sendChatMessage() {
+      const input = document.getElementById('chat-user-input');
+      const message = input.value.trim();
+      if (!message) return;
+
+      const container = document.getElementById('chat-messages-container');
+
+      // User bubble
+      const userBubble = document.createElement('div');
+      userBubble.className = 'chat-bubble user';
+      userBubble.innerText = message;
+      container.appendChild(userBubble);
+      input.value = '';
+      container.scrollTop = container.scrollHeight;
+
+      // Loading bubble
+      const botBubble = document.createElement('div');
+      botBubble.className = 'chat-bubble bot';
+      botBubble.innerHTML = '<em>Thinking & analyzing agronomic database...</em>';
+      container.appendChild(botBubble);
+      container.scrollTop = container.scrollHeight;
+
+      try {
+        const resp = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ message: message })
+        });
+        const data = await resp.json();
+        if (data.status === 'success') {
+          // Render markdown-like linebreaks safely
+          let formatted = data.reply
+            .replace(/\n\n/g, '<br><br>')
+            .replace(/\n/g, '<br>')
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+          botBubble.innerHTML = formatted;
+        } else {
+          botBubble.innerHTML = 'Sorry, could not process that request. Please try again.';
+        }
+      } catch (err) {
+        console.error('Chat error:', err);
+        botBubble.innerHTML = 'Unable to reach Kisan AI Copilot server. Please check connection.';
+      }
+      container.scrollTop = container.scrollHeight;
+    }
+
     // MODAL
     function showErrorModal(message, title = "Error of place") {
       document.getElementById('modal-title-text').innerText = title;
@@ -2558,6 +3149,7 @@
       triggerPrediction();
       loadHistory();
       renderMarketRates();
+      calculateProfitEstimate();
     });
   </script>
 </body>

@@ -11,6 +11,8 @@ from src.database import save_prediction, get_history, get_prediction_by_id, cle
 from src.market_rates import get_all_market_rates, get_commodity_by_id
 from src.shops_service import get_nearby_shops
 from src.farmer_tools import calculate_fertilizer_bags, get_pest_and_disease_guide, get_helplines, CROP_FERT_GUIDELINES
+from src.ai_chatbot import generate_ai_response
+from src.season_and_profit import estimate_farm_budget, get_seasonal_crops_data, CROP_BUDGET_BENCHMARKS
 
 app = Flask(__name__)
 engine = CropAdvisoryEngine()
@@ -51,6 +53,7 @@ def index():
     market_rates = get_all_market_rates()
     diseases = get_pest_and_disease_guide()
     helplines = get_helplines()
+    seasons = get_seasonal_crops_data()
     return render_template("index.html", 
                            presets=PRESETS, 
                            benchmarks=benchmarks, 
@@ -59,7 +62,35 @@ def index():
                            fert_crops=CROP_FERT_GUIDELINES,
                            diseases=diseases,
                            helplines=helplines,
+                           seasons=seasons,
+                           budget_crops=CROP_BUDGET_BENCHMARKS,
                            crop_count=len(CROP_DETAILS))
+
+@app.route("/api/chat", methods=["POST"])
+def api_chat():
+    try:
+        data = request.get_json(force=True)
+        user_msg = data.get("message", "")
+        reply = generate_ai_response(user_msg)
+        return jsonify({"status": "success", "reply": reply})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
+
+@app.route("/api/seasons", methods=["GET"])
+def api_seasons():
+    return jsonify({"status": "success", "seasons": get_seasonal_crops_data()})
+
+@app.route("/api/profit-estimator", methods=["POST"])
+def api_profit_estimator():
+    try:
+        data = request.get_json(force=True)
+        crop = data.get("crop", "rice")
+        land_size = float(data.get("land_size", 1.0))
+        unit = data.get("unit", "acre")
+        budget = estimate_farm_budget(crop, land_size, unit)
+        return jsonify({"status": "success", "budget": budget})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
 
 @app.route("/api/market-rates", methods=["GET"])
 def api_market_rates():
